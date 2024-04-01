@@ -1,0 +1,142 @@
+/* Common styles */
+html {
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between; /* 水平方向に要素を均等に配置 */
+    align-items: center;
+}
+
+.header__heading {
+    color: blue;
+    margin-top: 10px;
+    width: 50%; /* 画面幅の50%に設定 */
+}
+
+.header-search {
+    width: 50%; /* 画面幅の50%に設定 */
+    border: 1px solid #ccc; /* ボーダーを追加 */
+    border-radius: 3px; /* 角を丸くする */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+.header-search form {
+    display: none; /* ログインしているユーザーかつindex.blade.phpのみ表示されるように設定 */
+}
+
+.header-search form[action="/search"] {
+    display: block; /* ログインしているユーザーかつindex.blade.phpのみ表示されるように設定 */
+}
+
+.search-form__inner {
+    display: flex; /* 横並びにする */
+    margin: 20px;
+}
+.search-form__group {
+  display: flex;
+  align-items: center; /* アイコンとセレクトボックスの垂直方向の中央揃え */
+}
+.search-form__group-select {
+  margin-right: 10px; /* アイコンとセレクトボックスの間隔を調整 */
+}
+
+.search-form__area,
+.search-form__genre {
+    margin-right: 10px; /* 要素間の間隔を設定 */
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+}
+
+.search-form__actions {
+  display: flex;
+  align-items: center; /* アイコンと入力フィールドの垂直方向の中央揃え */
+}
+
+.search-form__keyword-input {
+  margin-left: 10px; /* アイコンと入力フィールドの間隔を調整 */
+}
+
+  /* タブレットサイズ以下の場合のスタイル */
+@media screen and (max-width: 768px) {
+  .header {
+      flex-direction: column; /* 縦方向に要素を配置 */
+      align-items: stretch; /* 要素を縦方向に伸縮可能にする */
+  }
+}
+
+  .form__inner {
+    max-width: 470px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form__heading {
+    background-color: blue;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .auth-form{
+    width: 100%;
+  }
+
+  .auth-form__inner {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .auth-form__group {
+    margin: 20px auto;
+    width: 100%;
+  }
+
+  .auth-form__group input {
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: #f9f9f9;
+  }
+
+  .auth-form__group input::placeholder{
+    color: #999;
+  }
+
+  .auth-form__group.btn {
+    text-align: right;
+  }
+
+  .auth-form__group .btn__inner {
+    border-radius: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    width: auto;
+    cursor: pointer;
+    display: inline-block;
+  }
