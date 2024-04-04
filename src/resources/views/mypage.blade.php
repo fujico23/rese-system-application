@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h2 class="mypage__name">testさん</h2>
+<h2 class="mypage__name">{{Auth::user()->name }} さん</h2>
 
 <div class="mypage-container">
     <div class="reservation">
@@ -91,86 +91,30 @@
     <div class="favorite-shop">
         <h3 class="favorite-shop__heading">お気に入り店舗</h3>
         <div class="card-container">
+            @foreach($favorites as $favorite)
             <div class="card">
                 <div class="shop__img">
-                    <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="Shop 1">
+                    <img src="{{ $favorite->shop->image_url }}" alt="{{ $favorite->shop->shop_name }}">
                 </div>
                 <div class="shop__details">
                     <div>
-                        <h4 class="shop-name">仙人</h4>
-                        <span class="shop-area hashtag">#東京</span>
-                        <span class="shop-genre hashtag">#寿司</span>
+                        <h4 class="shop-name">{{ $favorite->shop->shop_name }}</h4>
+                        <span class="shop-area hashtag">#{{ $favorite->shop->area->area_name }}</span>
+                        <span class="shop-genre hashtag">#{{ $favorite->shop->genre->genre_name }}</span>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="/detail" class="card-footer-btn btn">詳しく見る</a>
-                    <form action="/submit" method="POST">
+                    <a href="/detail/{{ $favorite->shop->id }}" class="card-footer-btn btn">詳しく見る</a>
+                    <form action="{{ route('mypage.favorite.delete') }}" method="POST">
+                        @method('delete')
                         @csrf
-                        <input type="hidden" name="heart" value="favorite_id">
+                        <input type="hidden" name="favorite_id" value="{{ $favorite->id }}">
                         <input class="heart" type="submit" value="&hearts;">
                     </form>
                 </div>
             </div>
-            <div class="card">
-                <div class="shop__img">
-                    <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="Shop 1">
-                </div>
-                <div class="shop__details">
-                    <div>
-                        <h4 class="shop-name">仙人</h4>
-                        <span class="shop-area hashtag">#東京</span>
-                        <span class="shop-genre hashtag">#寿司</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="/detail" class="card-footer-btn btn">詳しく見る</a>
-                    <form action="/submit" method="POST">
-                        @csrf
-                        <input type="hidden" name="heart" value="favorite_id">
-                        <input class="heart" type="submit" value="&hearts;">
-                    </form>
-                </div>
-            </div>
-            <div class="card">
-                <div class="shop__img">
-                    <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="Shop 1">
-                </div>
-                <div class="shop__details">
-                    <div>
-                        <h4 class="shop-name">仙人</h4>
-                        <span class="shop-area hashtag">#東京</span>
-                        <span class="shop-genre hashtag">#寿司</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="/detail" class="card-footer-btn btn">詳しく見る</a>
-                    <form action="/submit" method="POST">
-                        @csrf
-                        <input type="hidden" name="heart" value="favorite_id">
-                        <input class="heart" type="submit" value="&hearts;">
-                    </form>
-                </div>
-            </div>
-            <div class="card">
-                <div class="shop__img">
-                    <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="Shop 1">
-                </div>
-                <div class="shop__details">
-                    <div>
-                        <h4 class="shop-name">仙人</h4>
-                        <span class="shop-area hashtag">#東京</span>
-                        <span class="shop-genre hashtag">#寿司</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="/detail" class="card-footer-btn btn">詳しく見る</a>
-                    <form action="/submit" method="POST">
-                        @csrf
-                        <input type="hidden" name="heart" value="favorite_id">
-                        <input class="heart" type="submit" value="&hearts;">
-                    </form>
-                </div>
-            </div>
+            @endforeach
+
         </div>
     </div>
 </div>

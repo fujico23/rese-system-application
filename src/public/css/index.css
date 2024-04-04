@@ -87,10 +87,12 @@
 
 .heart {
   font-size: 2em;
-  color: grey; /* 未お気に入りはグレー */
   cursor: pointer;
 }
 
-.heart.favorited {
-  color: red; /* お気に入り済みは赤 */
+.heart-red {
+  color: red;
+}
+.heart-grey {
+  color: grey;
 }

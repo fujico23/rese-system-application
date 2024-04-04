@@ -24,10 +24,13 @@ use App\Http\Controllers\FavoriteController;
 Route::get('/thanks', [AuthController::class, 'thanks']);
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('index');
-    Route::post('/favorites/add', [ShopController::class, 'store'])->name('favorite.add');
+    Route::post('/favorites/add', [FavoriteController::class, 'store'])->name('favorite.add');
+    Route::delete('/favorites/delete', [FavoriteController::class, 'destroy'])->name('favorite.delete');
     Route::get('/detail/{shop}', [ShopController::class, 'show'])->name('shop.detail');
 
-    Route::get('/mypage', [UserController::class, 'index']);
+    Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+    Route::delete('mypage/favorite/delete', [UserController::class, 'destroy'])->name('mypage.favorite.delete');
+
 
     Route::post('/detail/{shop_id}/reservation', [ReservationController::class, 'store']);
     Route::get('/done', [ReservationController::class, 'done']);
