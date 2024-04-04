@@ -1,92 +1,116 @@
 /* Common styles */
 html {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+  background-color:#EEEEEEEE;
+}
 
-  *, *::before, *::after {
-    box-sizing: inherit;
-  }
+*, *::before, *::after {
+  box-sizing: inherit;
+}
 
-  body {
-    margin: 0;
-    padding: 0;
-  }
+body {
+  margin: 0;
+  padding: 0;
+}
 
-  .app {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 24px;
+}
+
+@media only screen and (min-width: 768px) {
   .header {
-    display: flex;
-    justify-content: space-between; /* 水平方向に要素を均等に配置 */
-    align-items: center;
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* スマートフォン用のメディアクエリ */
+@media only screen and (max-width: 767px) {
+  .header {
+      display: block;
+  }
+
+  .header__heading {
+      margin-bottom: 10px;
+  }
 }
 
 .header__heading {
-    color: blue;
-    margin-top: 10px;
-    width: 50%; /* 画面幅の50%に設定 */
+  color: blue;
+  margin-top: 10px;
+  grid-row: 1 / span 2;
+  grid-column: 1 / span 1;
 }
 
 .header-search {
-    width: 50%; /* 画面幅の50%に設定 */
-    border: 1px solid #ccc; /* ボーダーを追加 */
-    border-radius: 3px; /* 角を丸くする */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 影を追加 */
+  grid-column: 2 / span 1;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .header-search form {
-    display: none; /* ログインしているユーザーかつindex.blade.phpのみ表示されるように設定 */
+  display: none;
 }
 
 .header-search form[action="/search"] {
-    display: block; /* ログインしているユーザーかつindex.blade.phpのみ表示されるように設定 */
+  display: block;
 }
 
 .search-form__inner {
-    display: flex; /* 横並びにする */
-    margin: 20px;
+  display: flex;
+  margin: 20px;
 }
+
 .search-form__group {
   display: flex;
-  align-items: center; /* アイコンとセレクトボックスの垂直方向の中央揃え */
+  align-items: center;
 }
+
 .search-form__group-select {
-  margin-right: 10px; /* アイコンとセレクトボックスの間隔を調整 */
+  margin-right: 10px;
 }
 
 .search-form__area,
 .search-form__genre {
-    margin-right: 10px; /* 要素間の間隔を設定 */
-    border-right: 1px solid #ccc;
-    padding-right: 10px;
+  margin-right: 10px;
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
 }
 
 .search-form__actions {
   display: flex;
-  align-items: center; /* アイコンと入力フィールドの垂直方向の中央揃え */
+  align-items: center;
 }
 
 .search-form__keyword-input {
-  margin-left: 10px; /* アイコンと入力フィールドの間隔を調整 */
+  margin-left: 10px;
 }
 
-  /* タブレットサイズ以下の場合のスタイル */
+/* タブレットサイズ以下の場合のスタイル */
 @media screen and (max-width: 768px) {
   .header {
-      flex-direction: column; /* 縦方向に要素を配置 */
-      align-items: stretch; /* 要素を縦方向に伸縮可能にする */
+      flex-direction: column;
+      align-items: stretch;
   }
 }
 
-  .form__inner {
+  .form__inner,
+  .thanks{
     max-width: 470px;
     margin: 50px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
   }
 
   .form__heading {
@@ -102,16 +126,20 @@ html {
 
   .auth-form{
     width: 100%;
+    background-color: #fff;
+    display: flex;
   }
-
   .auth-form__inner {
     width: 80%;
     margin: 0 auto;
+    border: 1px #fff solid;
   }
 
   .auth-form__group {
     margin: 20px auto;
     width: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .auth-form__group input {
@@ -119,7 +147,6 @@ html {
     width: 100%;
     border: none;
     border-bottom: 1px solid #ccc;
-    background-color: #f9f9f9;
   }
 
   .auth-form__group input::placeholder{
@@ -127,7 +154,8 @@ html {
   }
 
   .auth-form__group.btn {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .auth-form__group .btn__inner {
@@ -140,3 +168,28 @@ html {
     cursor: pointer;
     display: inline-block;
   }
+
+  .thanks__inner {
+    margin: 80px auto;
+    text-align: center;
+  }
+
+  .thanks__heading {
+    margin: 40px auto;
+  }
+
+  .return-btn {
+
+  }
+
+.return-btn__inner {
+  display: inline-block;
+  padding: 7px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}

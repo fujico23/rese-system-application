@@ -1,0 +1,138 @@
+.mypage-container {
+
+}
+
+.mypage__name {
+    text-align: center;
+}
+
+.reservation__confirm,
+.favorite-shop__heading {
+  margin: 20px 0px 20px 0px;
+}
+
+.reservation {
+
+}
+
+.reservation__confirm__inner {
+  background-color: #007bff;
+  color: #fff;
+  padding: 40px 0 40px 20px;
+  margin-bottom: 20px;
+}
+
+.reservation__heading {
+  display: flex;
+}
+
+.reservation__number
+.reservation__table {
+  margin-top: 40px;
+}
+
+.reservation__number {
+  margin-left: 20px;
+}
+
+.reservation__table td {
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+}
+
+.card {
+  flex-basis: calc(50% - 10px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .card {
+      flex-basis: calc(50% - 10px);
+  }
+}
+
+.shop__img img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .shop__details {
+    padding: 20px 20px 5px 20px;
+  }
+  
+  .shop-name {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+  }
+  
+  .hashtag {
+    font-size: 14px;
+    margin-right: 5px;
+  }
+  
+  .card .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-decoration: none;
+  }
+  
+  .card-footer-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 30%;
+    max-width: 120px;
+    text-decoration: none;
+  }
+  
+  .card-footer {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .heart {
+    font-size: 2em;
+    color: red;
+    cursor: pointer;
+  }
+
+  @media (min-width: 768px) { 
+    .mypage-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .reservation, .favorite-shop {
+        flex-basis: 0; 
+        flex-grow: 1;
+    }
+    .reservation {
+        flex: 2;
+        margin-right: 20px;
+    }
+    .favorite-shop {
+        flex: 3; 
+    }
+}

@@ -11,6 +11,7 @@
         @csrf
         <div class="auth-form__inner">
             <div class="auth-form__group">
+                <i class="fa-solid fa-envelope fa-lg"></i>
                 <input type="email" name="email" value="{{ old('email') }}" placeholder="Email">
             </div>
             <p class="auth-error">
@@ -19,6 +20,7 @@
                 @enderror
             </p>
             <div class="auth-form__group">
+            <i class="fa-solid fa-unlock-keyhole fa-lg"></i>
                 <input type="password" name="password" placeholder="Password">
             </div>
             <p class="auth-error">

@@ -15,28 +15,26 @@
     <div class="app">
         <header class="header">
             <h1 class="header__heading">Rese</h1>
+            @if(Route::is('index'))
             <div class="header-search">
-                @if (Auth::check())
                 <form class="search-form" action="/search" method="get">
                     @csrf
                     <div class="search-form__inner">
                         <div class="search-form__group search-form__area">
                             <select class="search-form__group-select" name="area_name">
                                 <option value="All area" selected>All area</option>
-                                <option value="東京">東京</option>
-                                <option value="大阪">大阪</option>
-                                <option value="福岡">福岡</option>
+                                @foreach ($areas as $area)
+                                <option value="{{ $area->area_name}}">{{ $area->area_name }}</option>
+                                @endforeach
                             </select>
                             <i class="fa-sharp fa-solid fa-sort-down"></i>
                         </div>
                         <div class="search-form__group search-form__genre">
                             <select class="search-form__group-select" name="genre_name">
                                 <option value="All genre" selected>All genre</option>
-                                <option value="寿司">寿司</option>
-                                <option value="焼き肉">焼き肉</option>
-                                <option value="居酒屋">居酒屋</option>
-                                <option value="イタリアン">イタリアン</option>
-                                <option value="ラーメン">ラーメン</option>
+                                @foreach ($genres as $genre)
+                                <option value="{{ $genre->genre_name }}">{{ $genre->genre_name }}</option>
+                                @endforeach
                             </select>
                             <i class="fa-sharp fa-solid fa-sort-down"></i>
                         </div>
@@ -50,8 +48,8 @@
                         </div>
                     </div>
                 </form>
-                @endif
             </div>
+            @endif
             @yield('link')
         </header>
         <main class="main">

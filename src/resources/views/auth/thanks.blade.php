@@ -5,15 +5,12 @@
 @endsection
 
 @section('content')
-<div class="form__inner">
-    <h2 class="form__heading">会員登録ありがとうございます</h2>
-    <form class="auth-form" action="/login" method="post">
-        @csrf
-        <div class="auth-form__inner">
-            <div class="auth-form__group btn">
-                <input class="auth-form__group__button btn__inner" type="submit" value="ログインする">
-            </div>
+<div class="thanks">
+    <div class="thanks__inner">
+        <h2 class="thanks__heading">ご予約ありがとうございます</h2>
+        <div class="return-btn">
+            <a class="return-btn__inner" href="/login">ログイン</a>
         </div>
-    </form>
+    </div>
 </div>
 @endsection

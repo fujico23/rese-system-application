@@ -7,56 +7,29 @@
 
 @section('content')
 <div class="card-container">
+  @foreach ($shops as $shop)
   <div class="card">
-    <img src="shop1.jpg" alt="Shop 1">
-    <div class="details">
-      <div>
-        <h3>仙人</h3>
-        <span>#東京</span>
-        <span>#寿司</span>
-      </div>
-      <button class="btn">詳しく見る</button>
+    <div class="shop__img">
+      <img src="{{ $shop->image_url }}" alt="{{ $shop->shop_name }}">
     </div>
-    <span class="heart">&hearts;</span>
+    <div class="shop__details">
+      <div>
+        <h2 class="shop-name">{{ $shop->shop_name }}</h2>
+        <span class="shop-area hashtag">#{{ $shop->area->area_name }}</span>
+        <span class="shop-genre hashtag">#{{ $shop->genre->genre_name }}</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a href="{{ route('shop.detail', $shop) }}" class="card-footer-btn btn">詳しく見る</a>
+      <form action="{{ route('favorite.add') }}" method="POST">
+        @csrf
+        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+        <button class="heart" type="submit">&hearts;</button>
+      </form>
+    </div>
   </div>
+  @endforeach
 
-  <div class="card">
-    <img src="shop2.jpg" alt="Shop 2">
-    <div class="details">
-      <div>
-        <h3>牛助</h3>
-        <span>#大阪府</span>
-        <span>焼肉</span>
-      </div>
-      <button class="btn">詳しく見る</button>
-    </div>
-    <span class="heart">&hearts;</span>
-  </div>
-
-  <div class="card">
-    <img src="shop3.jpg" alt="Shop 3">
-    <div class="details">
-      <div>
-        <h3>Shop 3</h3>
-        <span>福岡県</span>
-        <span>居酒屋</span>
-      </div>
-      <button class="btn">詳しく見る</button>
-    </div>
-    <span class="heart">&hearts;</span>
-  </div>
-
-  <div class="card">
-    <img src="shop4.jpg" alt="Shop 4">
-    <div class="details">
-      <div>
-        <h3>ルーク</h3>
-        <span>東京都</span>
-        <span>イタリアン</span>
-      </div>
-      <button class="btn">詳しく見る</button>
-    </div>
-    <span class="heart">&hearts;</span>
-  </div>
 </div>
 @endsection

@@ -1,0 +1,212 @@
+.shop-container,
+.reservation-container {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+/* タブレット用のスタイル */
+@media only screen and (min-width: 768px) {
+    .shop-container,
+    .reservation-container {
+        width: 48%;
+        float: left;
+    }
+    .reservation-container {
+        width: 48%;
+        float: right;
+        clear: none;
+        margin-top: 10px;
+    }
+}
+
+/* スマートフォン用のスタイル */
+@media only screen and (max-width: 767px) {
+    .shop-container,
+    .reservation-container {
+        width: 100%;
+        float: none;
+    }
+    .reservation-container {
+        position: none;
+    }
+}
+
+/*　ショップ側スタイル　*/
+.shop__heading {
+    margin: 20px 0;
+    display: flex;
+}
+.return {
+    display: inline-block;
+    padding: 5px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #444; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.return:hover {
+    background-color:blue;
+    color: #fff;
+}
+
+.shop__img,
+.shop__img img {
+    width: 100%;
+}
+
+.hashtag {
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+/* 予約側スタイル */
+.reservation-container {
+    box-sizing: border-box;
+    background-color: #305DFF;
+    color: #fff;
+    border-radius: 5px;
+    position: relative;
+    top: -80px;
+  }
+
+
+.reservation-form__inner {
+    border: none;
+    box-shadow: none;
+    padding: 36px 40px 0px 20px;
+}
+
+.reservation__heading {
+    margin-bottom: 20px;
+}
+
+.form__tag {
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.form__tag input,
+.form__tag select {
+    padding: 7px;
+}
+
+.reservation__table{
+    background-color: #4D7FFF;
+    border-radius: 3px;
+    margin-bottom: 200px;
+    padding: 20px;
+    width: 90%;
+}
+
+.reservation__btn {
+    background-color: #0538FF;
+    width: 100%;
+    text-align: center;
+}
+
+.reservation__btn button {
+    color: #fff;
+    margin: 10px auto;
+}
+
+/* モーダルウィンドウ */
+#pop-up:checked + .overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+  }
+
+  #pop-up {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0); /* 初期状態は透明 */
+    opacity: 0; /* 初期状態は透明 */
+    transition: opacity 0.5s ease;
+  }
+
+  .modal__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 auto;
+    max-width: 70%;
+    height: auto;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+  .modal__link:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  .close {
+    position: absolute;
+    top: -6px;
+    left: -2px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .modal__link a,
+  .header-nav__button {
+    display: block;
+    text-decoration: none;
+    color: #0538FF;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 48px;
+    margin: 0px 360px;
+  }
+
+  .modal__link a:hover,
+  .header-nav__button:hover {
+    background-color: #f2f2f2;
+  }
+
+  /* スマートフォン向けのスタイル */
+  @media screen and (max-width: 600px) {
+    .modal__inner {
+      padding: 10px;
+      font-size: 16px;
+      max-width: 90%; 
+    }
+
+    .close {
+      top: -6px;
+      right: -6px;
+      font-size: 20px; 
+    }
+
+    .modal__link a,
+    .header-nav__button {
+      padding: 8px;
+      font-size: 20px;
+    }
+  }

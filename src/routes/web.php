@@ -5,6 +5,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FavoriteController;
 
 
 /*
@@ -18,9 +21,18 @@ use App\Http\Controllers\ShopController;
 |
 */
 
-/*Route::get('/thanks', [AuthController::class, 'thanks']);*/
+Route::get('/thanks', [AuthController::class, 'thanks']);
 Route::middleware('auth', 'verified')->group(function () {
-    Route::get('/', [ShopController::class, 'index']);
+    Route::get('/', [ShopController::class, 'index'])->name('index');
+    Route::post('/favorites/add', [ShopController::class, 'store'])->name('favorite.add');
+    Route::get('/detail/{shop}', [ShopController::class, 'show'])->name('shop.detail');
+
+    Route::get('/mypage', [UserController::class, 'index']);
+
+    Route::post('/detail/{shop_id}/reservation', [ReservationController::class, 'store']);
+    Route::get('/done', [ReservationController::class, 'done']);
+    Route::patch('/mypage/reservation/{id}', [ReservationController::class, 'update']);
+    Route::delete('/mypage/reservation/{id}', [ReservationController::class, 'destroy']);
 });
 
 
@@ -32,7 +44,7 @@ Route::get('/email/verify', function () {
 //メール確認のリンクをクリックした後の処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/');
+    return redirect('/thanks');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 //メール確認の再送信

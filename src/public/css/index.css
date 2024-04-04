@@ -1,75 +1,96 @@
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* カードの最小幅を250pxとし、画面幅に応じて列の数を調整 */
+  gap: 20px; /* カード間の間隔 */
+}
 
-  .card {
-    width: calc(25% - 20px);
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  overflow: hidden;
+  background-color: #fff;
+}
 
-  @media screen and (max-width: 768px) {
-    .card {
-      width: calc(50% - 20px);
-    }
+/* スマートフォン用のメディアクエリ */
+@media only screen and (max-width: 767px) {
+  .card-container {
+      grid-template-columns: repeat(1, 1fr); /* 1列のみ表示 */
   }
+}
 
-  @media screen and (max-width: 480px) {
-    .card {
-      width: calc(100% - 20px);
-    }
+/* タブレット用のメディアクエリ */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .card-container {
+      grid-template-columns: repeat(2, 1fr); /* 2列表示 */
   }
+}
 
-  .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
+/* パソコン用のメディアクエリ */
+@media only screen and (min-width: 1024px) {
+  .card-container {
+      grid-template-columns: repeat(4, 1fr); /* 4列表示 */
   }
+}
 
-  .card .details {
-    display: flex;
-    flex-direction: column; /* 横から縦方向に変更 */
-    align-items: flex-start; /* 左寄せに変更 */
-    margin-bottom: 10px;
-  }
+.shop__img img {
+  width: 100%;
+  height: auto;
+}
 
-  .card .details h3 {
-    margin: 0;
-    font-size: 18px;
-  }
+.shop__details {
+  padding: 20px 20px 5px 20px;
+}
 
-  .card .details span {
-    font-size: 14px;
-  }
+.shop-name {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+}
 
-  .card .btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.hashtag {
+  font-size: 14px;
+  margin-right: 5px;
+}
 
-  .card .btn:hover {
-    background-color: #0056b3;
-  }
+.card .btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-decoration: none;
+}
 
-  .card .heart {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: red;
-    cursor: pointer;
-  }
+.card-footer-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 30%;
+  max-width: 120px;
+  text-decoration: none;
+}
+
+.card-footer {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heart {
+  font-size: 2em;
+  color: grey; /* 未お気に入りはグレー */
+  cursor: pointer;
+}
+
+.heart.favorited {
+  color: red; /* お気に入り済みは赤 */
+}
