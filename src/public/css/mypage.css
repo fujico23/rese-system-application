@@ -4,26 +4,39 @@
 
 .mypage__name {
     text-align: center;
+    font-size: 34px;
 }
 
 .reservation__confirm,
 .favorite-shop__heading {
   margin: 20px 0px 20px 0px;
+  font-size: 24px;
 }
 
-.reservation {
-
+.reservation__update {
+  text-align: right;
 }
 
-.reservation__confirm__inner {
+.reservation__container { 
   background-color: #007bff;
   color: #fff;
-  padding: 40px 0 40px 20px;
+  padding: 40px 30px 40px 30px;
   margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reservation__heading {
   display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.clock-img {
+  display: flex;
+  align-items: center;
+  width: 20%;
 }
 
 .reservation__number
@@ -32,18 +45,51 @@
 }
 
 .reservation__number {
-  margin-left: 20px;
+  font-size: 18px;
+  width: 80%;
 }
 
-.reservation__table td {
-  padding-top: 10px; 
-  padding-bottom: 10px; 
+.fa-regular {
+  width: 10%;
 }
 
+.reservation__delete button {
+  /* ボタンのデフォルトスタイル */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+.table__row__inner {
+  font-size: 18px;
+}
+
+.select-field,
+.input-field {
+  color: #fff; 
+  transition: color 0.3s ease; /* アニメーション効果を追加 */
+}
+
+.select-field:hover {
+  color: #f74b07;
+  cursor: pointer; /* マウスがポインターに変わることを示す */
+}
+.input-field :hover {
+  color: #f74b07;
+  cursor: pointer; /* マウスがポインターに変わることを示す */
+}
+
+.table__row__edit {
+  padding: 10px 0 10px 30px;
+}
+
+
+/* お気に入りのお店 */
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .card {
@@ -66,11 +112,11 @@
     width: 100%;
     height: auto;
   }
-  
+
   .shop__details {
     padding: 20px 20px 5px 20px;
   }
-  
+
   .shop-name {
     margin: 0 0 10px;
     font-size: 1.2em;
@@ -119,6 +165,8 @@
     cursor: pointer;
   }
 
+
+  /*　レスポンシブデザイン　*/
   @media (min-width: 768px) { 
     .mypage-container {
         display: flex;

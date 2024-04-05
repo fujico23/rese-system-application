@@ -21,21 +21,22 @@ use App\Http\Controllers\FavoriteController;
 |
 */
 
+/* ログインしなくても一覧ページと店舗情報は見られるようにする */
 Route::get('/thanks', [AuthController::class, 'thanks']);
+Route::get('/', [ShopController::class, 'index'])->name('index');
+Route::get('/search', [ShopController::class, 'search'])->name('search');
+Route::get('/detail/{shop}', [ShopController::class, 'show'])->name('shop.detail');
 Route::middleware('auth', 'verified')->group(function () {
-    Route::get('/', [ShopController::class, 'index'])->name('index');
     Route::post('/favorites/add', [FavoriteController::class, 'store'])->name('favorite.add');
     Route::delete('/favorites/delete', [FavoriteController::class, 'destroy'])->name('favorite.delete');
-    Route::get('/detail/{shop}', [ShopController::class, 'show'])->name('shop.detail');
 
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
     Route::delete('mypage/favorite/delete', [UserController::class, 'destroy'])->name('mypage.favorite.delete');
 
-
-    Route::post('/detail/{shop_id}/reservation', [ReservationController::class, 'store']);
+    Route::post('/detail/{shop}/reservation', [ReservationController::class, 'store']);
     Route::get('/done', [ReservationController::class, 'done']);
-    Route::patch('/mypage/reservation/{id}', [ReservationController::class, 'update']);
-    Route::delete('/mypage/reservation/{id}', [ReservationController::class, 'destroy']);
+    Route::delete('/mypage/reservation/{id}', [ReservationController::class, 'destroy'])->name('mypage.reservation.delete');
+    Route::patch('/mypage/reservation/{id}', [ReservationController::class, 'update'])->name('mypage.reservation.update');
 });
 
 

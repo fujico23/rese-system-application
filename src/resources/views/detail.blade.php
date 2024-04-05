@@ -7,26 +7,6 @@
 
 @section('content')
 
-<!-- モーダルウィンドウ -->
-<input type="checkbox" id="pop-up" checked>
-<div class="overlay">
-    <ul class="modal__inner">
-        <li>
-            <label class="close" for="pop-up">
-                <i class="fa-solid fa-square-xmark fa-lg" style="color: #0d09fb;"></i>
-            </label>
-        </li>
-        <li class="modal__link"><a href="/">Home</a></li>
-        <li class="modal__link">
-            <form class="form" action="/logout" method="post">
-                @csrf
-                <button class="header-nav__button">Logout</button>
-            </form>
-        </li>
-        <li class="modal__link"><a href="/mypage">Mypage</a></li>
-    </ul>
-</div>
-
 <!-- ショップ情報 -->
 <div class="shop-container">
     <div class="shop__heading">
@@ -51,23 +31,28 @@
 <!-- 予約情報-->
 <div class="reservation-container">
     <div class="reservation-container__inner">
-        <form action="/store" method="post">
+        <form action="/detail/{shop}/reservation" method="post">
             @csrf
             <div class="reservation-form__inner">
                 <h2 class="reservation__heading">予約</h2>
                 <div class="reservation-date form__tag">
-                    <input type="date">
+                    <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="reservation-time form__tag">
-                    <select name="" id="">
-                        <option value="">17:00</option>
+                    <select name="reservation_time">
+                        @foreach($reservationTimes as $time)
+                        <option value="{{ $time }}">{{ $time }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="numer-of-guests form__tag">
-                    <select name="" id="">
-                        <option value="">1人</option>
+                    <select name="number_of_guests">
+                        @for ($count = 1; $count <= 20; $count++) 
+                        <option value="{{ $count }}">{{ $count }}</option>
+                         @endfor
                     </select>
                 </div>
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
 
                 <table class="reservation__table">
                     <tr class="table__row">
@@ -76,22 +61,58 @@
                     </tr>
                     <tr class="table__row">
                         <td>Date</td>
-                        <td>2021-04-01</td>
+                        <td id="reservation_date_display">選択して下さい</td>
                     </tr>
                     <tr class="table__row">
                         <td>Time</td>
-                        <td>17:00</td>
+                        <td id="reservation_time">選択して下さい</td>
                     </tr>
                     <tr class="table__row">
                         <td>Number</td>
-                        <td>1人</td>
+                        <td id="guest_count">選択して下さい</td>
                     </tr>
                 </table>
             </div>
             <div class="reservation__btn">
-                <button type="submit" name="">予約する</button>
+                @auth
+                <button type="submit" name="reservation_button">予約する</button>
+                @else
+                <button type="button" onclick="openModal()">予約する</button>
+                @endauth
             </div>
         </form>
     </div>
 </div>
+
+@if (Auth::check())
+@include('modal1')
+@else
+@include('modal2')
+@endif
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectReservationTimeElement = document.querySelector('select[name="reservation_time"]');
+        var reservationTimeElement = document.getElementById('reservation_time');
+
+        var selectNumberOfGuestsElement = document.querySelector('select[name="number_of_guests"]');
+        var guestCountElement = document.getElementById('guest_count');
+
+        var reservationDateElement = document.getElementById('reservation_date');
+        var reservationDateDisplayElement = document.getElementById('reservation_date_display');
+
+        selectReservationTimeElement.addEventListener('change', function() {
+            reservationTimeElement.textContent = selectReservationTimeElement.value;
+        });
+
+        selectNumberOfGuestsElement.addEventListener('change', function() {
+            var guestCount = selectNumberOfGuestsElement.value;
+            guestCountElement.textContent = guestCount + "人";
+        });
+
+        reservationDateElement.addEventListener('change', function() {
+            reservationDateDisplayElement.textContent = reservationDateElement.value;
+        });
+    });
+</script>
 @endsection

@@ -14,41 +14,50 @@
 <body>
     <div class="app">
         <header class="header">
-            <h1 class="header__heading">Rese</h1>
-            @if(Route::is('index'))
+            <div class="header__heading">
+                <h1 class="header__inner">Rese</h1>
+            </div>
+            @if(Route::is('index','search'))
+
             <div class="header-search">
                 <form class="search-form" action="/search" method="get">
                     @csrf
                     <div class="search-form__inner">
                         <div class="search-form__group search-form__area">
-                            <select class="search-form__group-select" name="area_name">
-                                <option value="All area" selected>All area</option>
+                            <select class="search-form__group-select" name="area_id">
+                                <option value="">All area</option>
                                 @foreach ($areas as $area)
-                                <option value="{{ $area->area_name}}">{{ $area->area_name }}</option>
+                                <option value="{{ $area->id }}">{{ $area->area_name }}</option>
                                 @endforeach
                             </select>
-                            <i class="fa-sharp fa-solid fa-sort-down"></i>
+                            <i class="fa-sharp fa-solid fa-caret-down" style="color: #b0b0b0;"></i>
                         </div>
                         <div class="search-form__group search-form__genre">
-                            <select class="search-form__group-select" name="genre_name">
-                                <option value="All genre" selected>All genre</option>
+                            <select class="search-form__group-select" name="genre_id">
+                                <option value="">All genre</option>
                                 @foreach ($genres as $genre)
-                                <option value="{{ $genre->genre_name }}">{{ $genre->genre_name }}</option>
+                                <option value="{{ $genre->id }}">{{ $genre->genre_name }}</option>
                                 @endforeach
                             </select>
-                            <i class="fa-sharp fa-solid fa-sort-down"></i>
+                            <i class="fa-sharp fa-solid fa-caret-down" style="color: #b0b0b0;"></i>
                         </div>
                         <div class="search-form__actions">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <button class="" type="submit">
+                                <i class="fa-solid fa-magnifying-glass fa-beat-fade"></i>
+                            </button>
                         </div>
                         <input class="search-form__group search-form__keyword-input" type="text" name="keyword" placeholder="Search..." value="">
                         <div class="search-form__actions">
-                            <input class="search-form__search-btn btn" type="submit" value="検索">
-                            <input class="search-form__reset-btn btn" type="submit" value="リセット" name="reset">
+                            <input class="search-form__reset-btn btn" type="reset" value="">
                         </div>
                     </div>
                 </form>
             </div>
+            @if (Auth::check())
+            <p class="user-name">{{ Auth::user()->name }} さん</p>
+            @else
+            <p class="user-name">ゲストさん</p>
+            @endif
             @endif
             @yield('link')
         </header>

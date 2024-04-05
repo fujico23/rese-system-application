@@ -11,82 +11,78 @@
 <div class="mypage-container">
     <div class="reservation">
         <h3 class="reservation__confirm">予約状況</h3>
-        <form action="">
-            @csrf
-            <div class="reservation__confirm__inner">
-                <div class="reservation__heading">
-                    <i class="fa-regular fa-clock" style="color: #74C0FC;"></i>
-                    <h4 class="reservation__number">予約1</h4>
-                    <div class="reservation__delete">
-                        <i class="fa-regular fa-circle-xmark" style="color: #74C0FC;"></i>
-                        <input class="fa-regular fa-circle-xmark" style="color: #74C0FC;" type="submit" value="">
-                    </div>
+        @foreach($reservations as $reservation)
+        <div class="reservation__container">
+            <div class="reservation__heading">
+                <div class="clock-img">
+                    <i class="fa-regular fa-clock fa-xl" style="color: #f5f7fa;"></i>
                 </div>
-                <table class="reservation__table">
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Shop</td>
-                            <td>仙人</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Date</td>
-                            <td>2021-04-01</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Time</td>
-                            <td>17:00</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Number</td>
-                            <td>1人</td>
-                        </tr>
-                    </div>
-                </table>
-            </div>
-            <div class="reservation__confirm__inner">
-                <div class="reservation__heading">
-                    <i class="fa-regular fa-clock" style="color: #74C0FC;"></i>
-                    <h4 class="reservation__number">予約1</h4>
+                <h4 class="reservation__number">予約1</h4>
+                <form action=" {{ route('mypage.reservation.delete', ['id' => $reservation->id]) }}" method="post">
+                    @csrf
+                    @method('delete')
                     <div class="reservation__delete">
-                        <i class="fa-regular fa-circle-xmark" style="color: #74C0FC;"></i>
-                        <input class="fa-regular fa-circle-xmark" style="color: #74C0FC;" type="submit" value="">
+                        <button class="fa-regular fa-circle-xmark fa-bounce fa-xl" style="color: #f2f4f8;" type="submit" value="">
                     </div>
-                </div>
-                <table class="reservation__table">
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Shop</td>
-                            <td>仙人</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Date</td>
-                            <td>2021-04-01</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Time</td>
-                            <td>17:00</td>
-                        </tr>
-                    </div>
-                    <div class="table__row">
-                        <tr class="table__row__inner">
-                            <td>Number</td>
-                            <td>1人</td>
-                        </tr>
-                    </div>
-                </table>
+                </form>
             </div>
-        </form>
+
+            <div class="table">
+                <form action=" {{ route('mypage.reservation.update', ['id' => $reservation->id]) }}" method="post">
+                    @csrf
+                    @method('patch')
+                    <table class="reservation__table">
+                        <div class="table__row">
+                            <tr class="table__row__inner">
+                                <td class="table__row__name">Shop</td>
+                                <td class="table__row__edit">{{ $reservation->shop->shop_name }}</td>
+                            </tr>
+                        </div>
+                        <div class="table__row">
+                            <tr class="table__row__inner">
+                                <td class="table__row__name">Date</td>
+                                <td class="table__row__edit">
+                                    <input type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" class="input-field">
+                                </td>
+                            </tr>
+                        </div>
+                        <div class="table__row">
+                            <tr class="table__row__inner">
+                                <td class="table__row__name">Time</td>
+                                <td class="table__row__edit">
+                                    <select name="reservation_time" class="select-field">
+                                        <option value="option1">{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</option>
+                                        @foreach($reservationTimes as $time)
+                                        <option value="{{ $time }}">{{ $time }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        </div>
+                        <div class="table__row">
+                            <tr class="table__row__inner">
+                                <td class="table__row__name">Number</td>
+                                <td class="table__row__edit">
+                                    <select name="number_of_guests" class="select-field">
+                                        <option value="option1">{{ $reservation->number_of_guests }}</option>
+                                        @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}</option>
+                                            @endfor
+                                    </select>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                    <div class="reservation__update">
+                        <button class=" fa-regular fa-pen-to-square fa-xl" style="color: #f2f4f8;" type="submit" value="ボタン">
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endforeach
     </div>
+
+
+
 
     <div class="favorite-shop">
         <h3 class="favorite-shop__heading">お気に入り店舗</h3>
@@ -109,13 +105,19 @@
                         @method('delete')
                         @csrf
                         <input type="hidden" name="favorite_id" value="{{ $favorite->id }}">
-                        <input class="heart" type="submit" value="&hearts;">
+                        <button class="heart heart-grey" type="submit">
+                            <i class="fa-solid fa-heart" style="color: #fc030f;"></i>
+                        </button>
                     </form>
                 </div>
             </div>
             @endforeach
-
         </div>
     </div>
 </div>
+
+@include('modal1')
+
+
+
 @endsection

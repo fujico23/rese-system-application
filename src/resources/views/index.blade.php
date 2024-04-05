@@ -22,25 +22,36 @@
     <div class="card-footer">
       <a href="{{ route('shop.detail', $shop) }}" class="card-footer-btn btn">詳しく見る</a>
       @if ($shop->isFavorited)
-      <form action="{{ route('favorite.delete') }}" method="POST">
+      <form id="favorite-delete-form" action="{{ route('favorite.delete') }}" method="POST">
         @method('delete')
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-        <button class="heart heart-red" type="submit">&hearts;</button>
+        <button class="heart heart-grey" type="submit">
+          <i class="fa-solid fa-heart" style="color: #fc030f;"></i>
+        </button>
       </form>
       @else
-      <form action="{{ route('favorite.add') }}" method="POST">
+      <form id="" action="{{ route('favorite.add') }}" method="POST">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-        <button class="heart heart-grey" type="submit">&hearts;</button>
+        <button class="heart heart-grey" type="submit">
+          <i class="fa-solid fa-heart"></i>
+        </button>
       </form>
       @endif
-
     </div>
   </div>
   @endforeach
-
 </div>
+
+@if (Auth::check())
+@include('modal1')
+@else
+@include('modal2')
+@endif
+
+
+
 @endsection
