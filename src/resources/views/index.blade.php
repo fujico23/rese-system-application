@@ -46,11 +46,7 @@
   @endforeach
 </div>
 
-@if (Auth::check())
-@include('modal1')
-@else
-@include('modal2')
-@endif
+
 
 
 

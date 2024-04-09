@@ -10,6 +10,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FavoriteController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +22,7 @@ use App\Http\Controllers\FavoriteController;
 |
 */
 
-/* ログインしなくても一覧ページと店舗情報は見られるようにする */
+/* ログインしなくても一覧ページと店舗情報は見られるようにしている */
 Route::get('/thanks', [AuthController::class, 'thanks']);
 Route::get('/', [ShopController::class, 'index'])->name('index');
 Route::get('/search', [ShopController::class, 'search'])->name('search');

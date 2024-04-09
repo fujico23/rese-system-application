@@ -36,7 +36,7 @@
             <div class="reservation-form__inner">
                 <h2 class="reservation__heading">予約</h2>
                 <div class="reservation-date form__tag">
-                    <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
+                <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="reservation-time form__tag">
                     <select name="reservation_time">
@@ -47,8 +47,8 @@
                 </div>
                 <div class="numer-of-guests form__tag">
                     <select name="number_of_guests">
-                        @for ($count = 1; $count <= 20; $count++) 
-                        <option value="{{ $count }}">{{ $count }}</option>
+                        @for ($count = 1; $count <= 20; $count++)
+                        <option value="{{ $count }}">{{ $count }}人</option>
                          @endfor
                     </select>
                 </div>
@@ -75,9 +75,9 @@
             </div>
             <div class="reservation__btn">
                 @auth
-                <button type="submit" name="reservation_button">予約する</button>
+                <button class="btn" type="submit" name="reservation_button">予約する</button>
                 @else
-                <button type="button" onclick="openModal()">予約する</button>
+                <button class="btn" type="button" onclick="openModal()">予約する</button>
                 @endauth
             </div>
         </form>
@@ -91,6 +91,26 @@
 @endif
 
 <script>
+    // 今日の日付を取得
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // 2ヶ月後の日付を計算
+    var maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 2);
+    var max_dd = String(maxDate.getDate()).padStart(2, '0');
+    var max_mm = String(maxDate.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var max_yyyy = maxDate.getFullYear();
+    var twoMonthsLater = max_yyyy + '-' + max_mm + '-' + max_dd;
+
+    // 最小の日付を設定
+    document.getElementById("reservation_date").setAttribute("min", today);
+
+    // 最大の日付を設定
+    document.getElementById("reservation_date").setAttribute("max", twoMonthsLater);
     document.addEventListener('DOMContentLoaded', function() {
         var selectReservationTimeElement = document.querySelector('select[name="reservation_time"]');
         var reservationTimeElement = document.getElementById('reservation_time');

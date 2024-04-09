@@ -1,14 +1,18 @@
 @extends('layouts/app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth/register.css')}}">
 <link rel="stylesheet" href="{{ asset('css/mypage.css')}}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
 <h2 class="mypage__name">{{Auth::user()->name }} さん</h2>
-
-<div class="mypage-container">
+@if(session('success'))
+<div class="alert alert-success">
+    <i class="fa fa-check-circle" aria-hidden="true"></i> {{ session('success') }}
+</div>
+@endif
+<div class="mypage__container">
     <div class="reservation">
         <h3 class="reservation__confirm">予約状況</h3>
         @foreach($reservations as $reservation)
@@ -18,19 +22,18 @@
                     <i class="fa-regular fa-clock fa-xl" style="color: #f5f7fa;"></i>
                 </div>
                 <h4 class="reservation__number">予約1</h4>
-                <form action=" {{ route('mypage.reservation.delete', ['id' => $reservation->id]) }}" method="post">
+                <form class="reservation-delete-form" action="{{ route('mypage.reservation.delete', ['id' => $reservation->id]) }}" method="post">
                     @csrf
                     @method('delete')
                     <div class="reservation__delete">
-                        <button class="fa-regular fa-circle-xmark fa-bounce fa-xl" style="color: #f2f4f8;" type="submit" value="">
+                        <button class="fa-regular fa-circle-xmark fa-2xl" style="color: #f2f4f8;" type="submit" value=""></button>
                     </div>
                 </form>
             </div>
-
             <div class="table">
-                <form action=" {{ route('mypage.reservation.update', ['id' => $reservation->id]) }}" method="post">
-                    @csrf
+                <form class="reservation-edit-form" action="{{ route('mypage.reservation.update', ['id' => $reservation->id]) }}" method="post">
                     @method('patch')
+                    @csrf
                     <table class="reservation__table">
                         <div class="table__row">
                             <tr class="table__row__inner">
@@ -42,7 +45,7 @@
                             <tr class="table__row__inner">
                                 <td class="table__row__name">Date</td>
                                 <td class="table__row__edit">
-                                    <input type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" class="input-field">
+                                    <input id="editableInput{{ $reservation->id }}" disabled type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" class="input-field">
                                 </td>
                             </tr>
                         </div>
@@ -50,8 +53,8 @@
                             <tr class="table__row__inner">
                                 <td class="table__row__name">Time</td>
                                 <td class="table__row__edit">
-                                    <select name="reservation_time" class="select-field">
-                                        <option value="option1">{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</option>
+                                    <select disabled id="mySelect{{ $reservation->id }}" name="reservation_time" class="editable select-field">
+                                        <option value="{{ $reservation->reservation_time }}">{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</option>
                                         @foreach($reservationTimes as $time)
                                         <option value="{{ $time }}">{{ $time }}</option>
                                         @endforeach
@@ -63,8 +66,8 @@
                             <tr class="table__row__inner">
                                 <td class="table__row__name">Number</td>
                                 <td class="table__row__edit">
-                                    <select name="number_of_guests" class="select-field">
-                                        <option value="option1">{{ $reservation->number_of_guests }}</option>
+                                    <select disabled id="mySelectNumber{{ $reservation->id }}" name="number_of_guests" class="editable select-field">
+                                        <option value="{{ $reservation->number_of_guests }}">{{ $reservation->number_of_guests }}</option>
                                         @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}</option>
                                             @endfor
                                     </select>
@@ -73,15 +76,20 @@
                         </div>
                     </table>
                     <div class="reservation__update">
-                        <button class=" fa-regular fa-pen-to-square fa-xl" style="color: #f2f4f8;" type="submit" value="ボタン">
+                        <div class="reservation-edit">
+                            <i class="fa-regular fa-pen-to-square fa-lg"></i>
+                            <button id="enableEdit{{ $reservation->id }}" class="reservation-edit-btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
+                        </div>
+                        <div class="reservation-submit">
+                            <i class="fa-regular fa-paper-plane fa-lg"></i>
+                            <button class="reservation-submit-btn" type="submit">確定</button>
+                        </div>
                     </div>
-                </form>
             </div>
+            </form>
         </div>
-        @endforeach
     </div>
-
-
+    @endforeach
 
 
     <div class="favorite-shop">
@@ -116,8 +124,38 @@
     </div>
 </div>
 
+
+
 @include('modal1')
 
+<script>
+    document.querySelectorAll('.reservation-delete-form').forEach(function(form) {
+        form.onsubmit = function(event) {
 
+            const isConfirmed = confirm('本当に予約を削除しますか？');
+
+            if (!isConfirmed) {
+                event.preventDefault();
+            }
+        };
+    });
+    // ボタンをクリックしたらSelectタブとInputを有効にする
+    function enableEdit(id) {
+        var editableElements = document.querySelectorAll("#editableInput" + id + ", #mySelect" + id + ", #mySelectNumber" + id);
+        for (var i = 0; i < editableElements.length; i++) {
+            editableElements[i].removeAttribute("disabled");
+        }
+    }
+
+    // 予約変更の確認ダイアログ
+    document.querySelectorAll('.reservation-edit-form').forEach(form => {
+        form.onsubmit = function(event) {
+            const isConfirmed = confirm('本当に予約を変更しますか？');
+            if (!isConfirmed) {
+                event.preventDefault();
+            }
+        };
+    });
+</script>
 
 @endsection

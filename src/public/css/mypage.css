@@ -1,10 +1,26 @@
-.mypage-container {
-
-}
-
 .mypage__name {
     text-align: center;
     font-size: 34px;
+}
+
+/* 予約を編集・削除した時のアラート表示 */
+.alert-success {
+  color: #007bff;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid transparent ;
+  margin-bottom: 20px;
+  text-align: center;
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.alert-success i {
+  color: #007bff;
+  margin-right: 10px;
 }
 
 .reservation__confirm,
@@ -13,11 +29,12 @@
   font-size: 24px;
 }
 
+/* 予約フォームのスタイル */
 .reservation__update {
   text-align: right;
 }
 
-.reservation__container { 
+.reservation__container {
   background-color: #007bff;
   color: #fff;
   padding: 40px 30px 40px 30px;
@@ -54,12 +71,46 @@
 }
 
 .reservation__delete button {
-  /* ボタンのデフォルトスタイル */
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
+.reservation__update {
+  display: flex;
+  justify-content: right;
+}
+.reservation-edit,
+.reservation-submit {
+  border-radius: 7px;
+  padding: 10px;
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+  text-align: center;
+}
+
+/* 編集ボタンのスタイル */
+.reservation-edit,
+.reservation-edit-btn {
+  background-color: #f7c0de;
+  color: #424242;
+}
+
+/* 送信ボタンのスタイル */
+.reservation-submit,
+.reservation-submit-btn {
+  background-color: #b36ef7;
+  color: #424242;
+}
+.reservation-submit-btn,
+.reservation-edit-btn {
+  margin-left: 15px;
+}
 
 .table__row__inner {
   font-size: 18px;
@@ -68,16 +119,16 @@
 .select-field,
 .input-field {
   color: #fff; 
-  transition: color 0.3s ease; /* アニメーション効果を追加 */
+  transition: color 0.3s ease;
 }
 
 .select-field:hover {
   color: #f74b07;
-  cursor: pointer; /* マウスがポインターに変わることを示す */
+  cursor: pointer;
 }
 .input-field :hover {
   color: #f74b07;
-  cursor: pointer; /* マウスがポインターに変わることを示す */
+  cursor: pointer;
 }
 
 .table__row__edit {
@@ -102,6 +153,8 @@
   background-color: #fff;
 }
 
+
+
 @media (min-width: 768px) {
   .card {
       flex-basis: calc(50% - 10px);
@@ -121,44 +174,48 @@
     margin: 0 0 10px;
     font-size: 1.2em;
   }
-  
+
   .hashtag {
     font-size: 14px;
     margin-right: 5px;
   }
-  
-  .card .btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    text-decoration: none;
-  }
-  
-  .card-footer-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 30%;
-    max-width: 120px;
-    text-decoration: none;
-  }
-  
+
+.card .btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-decoration: none;
+}
+
+.card-footer-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 30%;
+  max-width: 120px;
+  text-decoration: none;
+}
+
+.card-footer-btn:hover {
+  background-color: #009bff; /* ホバー時の背景色を少し明るく設定 */
+}
+
   .card-footer {
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .heart {
     font-size: 2em;
     color: red;
@@ -166,21 +223,42 @@
   }
 
 
-  /*　レスポンシブデザイン　*/
-  @media (min-width: 768px) { 
-    .mypage-container {
-        display: flex;
-        justify-content: space-between;
-    }
-    .reservation, .favorite-shop {
-        flex-basis: 0; 
-        flex-grow: 1;
-    }
-    .reservation {
-        flex: 2;
-        margin-right: 20px;
-    }
-    .favorite-shop {
-        flex: 3; 
-    }
+  /*　レスポンシブデザイン タブレット表示　*/
+@media (min-width: 768px) {
+  .mypage-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .reservation,
+  .favorite-shop {
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+}
+@media (max-width: 767px) {
+  .card-container {
+    display: block;
+  }
+
+  .card {
+    width: 100%;
+    flex-basis: auto;
+  }
+}
+
+/* レスポンシブデザイン　PC表示 */
+@media (min-width: 1024px) {
+  .mypage__container {
+    display: flex;
+    flex-direction: row;
+  }
+  .reservation,
+  .favorite-shop {
+    flex: 4;
+    margin-right: 20px;
+  }
+  .favorite-shop {
+    flex: 6;
+    margin-right: 0;
+  }
 }

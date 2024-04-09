@@ -1,12 +1,12 @@
 @extends('layouts/app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth/register.css')}}">
+<link rel="stylesheet" href="{{ asset('css/auth/authentication.css')}}">
 @endsection
 
 @section('content')
-<div class="form__inner">
-    <h2 class="form__heading">Registration</h2>
+<div class="auth__container">
+    <h2 class="auth__container__heading">Registration</h2>
     <form class="auth-form" action="/register" method="post">
         @csrf
         <div class="auth-form__inner">
@@ -34,8 +34,8 @@
                 {{ $message }}
                 @enderror
             </p>
-            <div class="auth-form__group btn">
-                <input class="auth-form__group__button btn__inner" type="submit" value="登録">
+            <div class="auth-form__btn">
+                <input class="auth-form__group__button btn" type="submit" value="登録">
             </div>
         </div>
     </form>

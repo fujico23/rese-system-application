@@ -1,6 +1,6 @@
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* カードの最小幅を250pxとし、画面幅に応じて列の数を調整 */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px; /* カード間の間隔 */
 }
 
@@ -11,27 +11,6 @@
   margin-bottom: 15px;
   overflow: hidden;
   background-color: #fff;
-}
-
-/* スマートフォン用のメディアクエリ */
-@media only screen and (max-width: 767px) {
-  .card-container {
-      grid-template-columns: repeat(1, 1fr); /* 1列のみ表示 */
-  }
-}
-
-/* タブレット用のメディアクエリ */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-  .card-container {
-      grid-template-columns: repeat(2, 1fr); /* 2列表示 */
-  }
-}
-
-/* パソコン用のメディアクエリ */
-@media only screen and (min-width: 1024px) {
-  .card-container {
-      grid-template-columns: repeat(4, 1fr); /* 4列表示 */
-  }
 }
 
 .shop__img img {
@@ -78,6 +57,10 @@
   text-decoration: none;
 }
 
+.card-footer-btn:hover {
+  background-color: #009bff;
+}
+
 .card-footer {
   padding: 10px 20px;
   display: flex;
@@ -96,3 +79,21 @@
 .heart-grey {
   color: grey;
 }
+
+/* スマートフォン用のメディアクエリ */
+@media only screen and (min-width: 375px) and (max-width: 767px) {
+  .card-container {
+    width: 100%;
+    grid-template-columns: repeat(1, 1fr); /* 1列のみ表示 */
+    gap: 0;
+  }
+}
+
+/* タブレット用のメディアクエリ */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
