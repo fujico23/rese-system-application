@@ -1,0 +1,7 @@
+.user-detail__container__table-row {
+    border: 1px solid black; /* 1pxの黒い境界線を設定 */
+  }
+
+.user-details__container__table {
+    border-collapse: collapse; /* セルの境界線を統合する */
+  }

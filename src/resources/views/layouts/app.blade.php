@@ -23,9 +23,13 @@
                         <i class="fa-solid fa-bars fa-lg" style="color: #0d09fb;"></i>
                     </div>
                     @if (Auth::check())
-                    @include('modal1')
+                      @if($role_id == 3)
+                        @include('modal1')
+                      @elseif($role_id == 2 || $role_id == 1)
+                        @include('modal3')
+                      @endif
                     @else
-                    @include('modal2')
+                      @include('modal2')
                     @endif
                 </div>
                 <div class="header-right">

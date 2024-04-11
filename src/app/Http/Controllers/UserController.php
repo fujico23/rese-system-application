@@ -14,6 +14,7 @@ class UserController extends Controller
     {
 
         $user = Auth::user();
+        $role_id = $user->role_id;
         $favorites = Favorite::with('shop')
             ->where('user_id', $user->id)
             ->get();
@@ -32,7 +33,7 @@ class UserController extends Controller
             $reservationTimes[] = $time->format('H:i'); // 時間を配列に追加
         }
 
-        return view('mypage', compact('favorites', 'reservations', 'reservationTimes'));
+        return view('mypage', compact('role_id','favorites', 'reservations', 'reservationTimes'));
     }
 
     public function destroy(Request $request)

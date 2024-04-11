@@ -15,7 +15,6 @@ class ReservationController extends Controller
         $data['user_id'] = $user_id;
 
         Reservation::create($data);
-
         return view('done');
     }
 

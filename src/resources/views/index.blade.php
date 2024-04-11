@@ -10,7 +10,7 @@
   @foreach ($shops as $shop)
   <div class="card">
     <div class="shop__img">
-      <img src="{{ $shop->image_url }}" alt="{{ $shop->shop_name }}">
+      <img src="{{ $shop->images->first()->image_url }}" alt="{{ $shop->shop_name }}">
     </div>
     <div class="shop__details">
       <div>

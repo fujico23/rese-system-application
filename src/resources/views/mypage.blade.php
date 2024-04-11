@@ -78,19 +78,18 @@
                     <div class="reservation__update">
                         <div class="reservation-edit">
                             <i class="fa-regular fa-pen-to-square fa-lg"></i>
-                            <button id="enableEdit{{ $reservation->id }}" class="reservation-edit-btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
+                            <button id="enableEdit{{ $reservation->id }}" class="reservation-edit-btn btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
                         </div>
                         <div class="reservation-submit">
                             <i class="fa-regular fa-paper-plane fa-lg"></i>
-                            <button class="reservation-submit-btn" type="submit">確定</button>
+                            <button class="reservation-submit-btn btn" type="submit">確定</button>
                         </div>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
+        @endforeach
     </div>
-    @endforeach
-
 
     <div class="favorite-shop">
         <h3 class="favorite-shop__heading">お気に入り店舗</h3>
@@ -98,7 +97,7 @@
             @foreach($favorites as $favorite)
             <div class="card">
                 <div class="shop__img">
-                    <img src="{{ $favorite->shop->image_url }}" alt="{{ $favorite->shop->shop_name }}">
+                    <img src="{{ $favorite->shop->images->first()->image_url }}" alt="{{ $favorite->shop->shop_name }}">
                 </div>
                 <div class="shop__details">
                     <div>

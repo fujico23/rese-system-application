@@ -91,6 +91,7 @@
 
 .form__tag input,
 .form__tag select {
+    width: 100%;
     padding: 7px;
 }
 

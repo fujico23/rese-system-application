@@ -13,9 +13,15 @@ class ShopController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        if ($user) {
+            $role_id = $user->role_id;
+        } else {
+            $role_id = null; // または、ログインしていない場合に適切と思われる別の値を設定
+        }
         $areas = Area::all();
         $genres = Genre::all();
-        $shops = Shop::with(['area', 'genre'])
+        $shops = Shop::with(['area', 'genre', 'images'])
             ->get();
 
         $favoriteShopIds = Auth::user() ? Auth::user()
@@ -26,7 +32,7 @@ class ShopController extends Controller
             $shop->isFavorited = in_array($shop->id, $favoriteShopIds);
         });
 
-        return view('index', compact('areas', 'genres', 'shops'));
+        return view('index', compact('role_id','areas', 'genres', 'shops'));
     }
 
     public function search(Request $request)

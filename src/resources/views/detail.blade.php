@@ -14,7 +14,7 @@
         <h2 class="shop-name">{{ $shop->shop_name }}</h2>
     </div>
     <div class="shop__img">
-        <img src="{{ $shop->image_url }}" alt="Shop 1">
+        <img src="{{ $shop->images->first()->image_url }}" alt="Shop 1">
     </div>
 
     <div class="shop-details">
@@ -35,8 +35,13 @@
             @csrf
             <div class="reservation-form__inner">
                 <h2 class="reservation__heading">予約</h2>
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
                 <div class="reservation-date form__tag">
-                <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
+                    <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="reservation-time form__tag">
                     <select name="reservation_time">
@@ -47,9 +52,8 @@
                 </div>
                 <div class="numer-of-guests form__tag">
                     <select name="number_of_guests">
-                        @for ($count = 1; $count <= 20; $count++)
-                        <option value="{{ $count }}">{{ $count }}人</option>
-                         @endfor
+                        @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}人</option>
+                            @endfor
                     </select>
                 </div>
                 <input type="hidden" name="shop_id" value="{{ $shop->id }}">
@@ -74,27 +78,18 @@
                 </table>
             </div>
             <div class="reservation__btn">
-                @auth
                 <button class="btn" type="submit" name="reservation_button">予約する</button>
-                @else
-                <button class="btn" type="button" onclick="openModal()">予約する</button>
-                @endauth
             </div>
         </form>
     </div>
 </div>
 
-@if (Auth::check())
-@include('modal1')
-@else
-@include('modal2')
-@endif
 
 <script>
     // 今日の日付を取得
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
@@ -102,7 +97,7 @@
     var maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 2);
     var max_dd = String(maxDate.getDate()).padStart(2, '0');
-    var max_mm = String(maxDate.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var max_mm = String(maxDate.getMonth() + 1).padStart(2, '0');
     var max_yyyy = maxDate.getFullYear();
     var twoMonthsLater = max_yyyy + '-' + max_mm + '-' + max_dd;
 

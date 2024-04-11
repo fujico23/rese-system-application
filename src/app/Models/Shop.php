@@ -27,6 +27,11 @@ class Shop extends Model
         return $this->hasMany(Reservation::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
     public function scopeGenreSearch($query, $genre_id)
     {
         if (!empty($genre_id)) {

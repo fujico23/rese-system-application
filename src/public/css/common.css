@@ -50,7 +50,7 @@ body {
   font-weight: bold;
   color: #525151;
   text-transform: uppercase;
-  font-size: 1.1em;
+  font-size: 1.1em; /* フォントサイズを調整 */
 }
 
 .header-right {
