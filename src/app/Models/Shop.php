@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Shop extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['shop_name', 'area_id', 'genre_id', 'description'];
+
     public function area()
     {
         return $this->belongsTo(Area::class);

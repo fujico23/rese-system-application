@@ -125,7 +125,6 @@
 
 
 
-@include('modal1')
 
 <script>
     document.querySelectorAll('.reservation-delete-form').forEach(function(form) {
@@ -143,6 +142,8 @@
         var editableElements = document.querySelectorAll("#editableInput" + id + ", #mySelect" + id + ", #mySelectNumber" + id);
         for (var i = 0; i < editableElements.length; i++) {
             editableElements[i].removeAttribute("disabled");
+            editableElements[i].style.backgroundColor = "#fff";
+            editableElements[i].style.color = "black";
         }
     }
 

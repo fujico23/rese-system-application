@@ -15,42 +15,44 @@
 <body>
     <div class="app">
         <header class="header">
-            <div class="header-left">
-                <div class="header__heading">
-                    <div class="header-left__logo1"></div>
-                    <h1 class="header-left__logo2">Rese</h1>
+            <div class="header__heading">
+                <div class="header__heading__left">
+                    <div class="header__heading__left-logo1"></div>
+                    <h1 class="header__heading__left-logo2">Rese</h1>
                     <div class="hamburger-menu" onclick="toggleMenu()">
                         <i class="fa-solid fa-bars fa-lg" style="color: #0d09fb;"></i>
                     </div>
                     @if (Auth::check())
                       @if($role_id == 3)
-                        @include('modal1')
-                      @elseif($role_id == 2 || $role_id == 1)
-                        @include('modal3')
+                        @include('menu.menu3')
+                      @elseif($role_id == 2)
+                        @include('menu.menu2')
+                      @elseif($role_id == 1)
+                        @include('menu.menu1')
                       @endif
                     @else
-                      @include('modal2')
+                      @include('menu.menu4')
                     @endif
                 </div>
-                <div class="header-right">
+                <div class="header__heading__right">
                     @if(Route::is('index'))
                     @if (Auth::check())
-                    <p class="header-left__user-name">{{ Auth::user()->name }} さん</p>
+                    <p class="header__heading__right-user-name">{{ Auth::user()->name }} さん</p>
                     @else
-                    <p class="header-left__user-name">ゲストさん</p>
+                    <p class="header__heading__right-user-name">ゲストさん</p>
                     @endif
                     @endif
                 </div>
             </div>
 
             @if(Route::is('index','search'))
-            <div class="header-search">
-                <form class="search-form" action="/search" method="get">
+            <div class="header__search">
+                <form class="header__search-form" action="/search" method="get">
                     @csrf
-                    <div class="search-form__inner">
-                        <div class="search-form__group">
-                            <div class="search-form__group__item search-form__area">
-                                <select class="search-form__group__item-select" name="area_id" onChange="myFunction()">
+                    <div class="header__search-form__inner">
+                        <div class="header__search-form__inner__group">
+                            <div class="header__search-form__inner__group__item search-form__area">
+                                <select class="header__search-form__inner__group__item-select" name="area_id" onChange="myFunction()">
                                     <option value="">All area</option>
                                     @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->area_name }}</option>
@@ -58,8 +60,8 @@
                                 </select>
                                 <i class="fa-sharp fa-solid fa-caret-down" style="color: #b0b0b0;"></i>
                             </div>
-                            <div class="search-form__group__item search-form__genre">
-                                <select class="search-form__group__item-select" name="genre_id">
+                            <div class="header__search-form__inner__group__item search-form__genre">
+                                <select class="header__search-form__inner__group__item-select" name="genre_id">
                                     <option value="">All genre</option>
                                     @foreach ($genres as $genre)
                                     <option value="{{ $genre->id }}">{{ $genre->genre_name }}</option>
@@ -68,16 +70,13 @@
                                 <i class="fa-sharp fa-solid fa-caret-down" style="color: #b0b0b0;"></i>
                             </div>
                         </div>
-                        <div class="search-form__group">
-                            <div class="search-form__group-item-keyword">
-                                <div class="search-form__group-actions">
+                        <div class="header__search-form__inner__group">
+                            <div class="header__search-form__inner__group__keyword">
+                                <div class="header__search-form__inner__group__keyword-action">
                                     <button class="" type="submit">
                                         <i class="fa-solid fa-magnifying-glass fa-beat-fade"></i>
                                     </button>
-                                    <input class="search-form__group-item-input search-form__keyword-input" type="text" name="keyword" placeholder="Search..." value="">
-                                </div>
-                                <div class="search-form__actions">
-                                    <input class="search-form__reset-btn btn" type="reset" value="">
+                                    <input class="header__search-form__inner__group__keyword-action-input search-form__keyword-input" type="text" name="keyword" placeholder="Search..." value="">
                                 </div>
                             </div>
                         </div>

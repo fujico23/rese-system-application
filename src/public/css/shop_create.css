@@ -1,0 +1,114 @@
+/* 店舗作成画面全体のスタイリング */
+.shop-create {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ヘッダーのスタイリング */
+.shop-create__header {
+    background-color: #007BFF;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* コンテナのスタイリング */
+.shop-create__container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* テーブルのスタイリング */
+.shop-create__container__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shop-create__container__table-row__header {
+    background-color: #acadad;
+    color: #FFF;
+    padding: 15px;
+    border-bottom: 2px solid #7f7f80;
+    text-align: left;
+}
+
+.shop-create__container__table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.shop-create__container__table-row__detail {
+    text-align: left;
+    padding: 12px;
+    color: #666;
+}
+
+/* 入力フォームのスタイリング */
+.shop-create__container__table-row__detail-input,
+.shop-create__container__table-area-select,
+.shop-create__container__table-genre-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+/* ボタンのスタイリング */
+.shop-create__container__table__btn-post {
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    float: right;
+}
+
+.shop-create__container__table__btn-post:hover {
+    background-color: #0056b3;
+}
+
+/* エラーメッセージのスタイリング */
+.alert {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.alert-danger {
+    border-color: #f5c6cb;
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+.alert-success {
+    border-color: #c6f5d2;
+    color: #1c7232;
+    background-color: #d7f8dd;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .shop-create__container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .shop-create__container__table-row__header,
+    .shop-create__container__table-row__detail {
+        padding: 10px;
+    }
+}

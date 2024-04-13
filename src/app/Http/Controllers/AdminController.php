@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\Shop;
 use App\Models\ShopUser;
 
+
 class AdminController extends Controller
 {
     public function admin()
@@ -22,12 +23,17 @@ class AdminController extends Controller
         $shops = Shop::all();
         $role_id = $user->role_id;
         $shopUsers = ShopUser::where('user_id', $user->id)->get();
-        return view('user_details', compact('shopUsers','user', 'roles', 'shops', 'role_id'));
+        return view('user_details', compact('shopUsers', 'user', 'roles', 'shops', 'role_id'));
     }
 
     public function update(Request $request, User $user)
     {
+        //role権限を変更
         $user->update(['role_id' => $request->role_id]);
+        //もしrole_idが2→3に降格したらshop_usersテーブルから関連レコード削除
+        if ($request->role_id == 3) {
+            $user->shopUsers()->delete();
+        }
         return redirect()->route('users.show', $user);
     }
 
@@ -40,6 +46,7 @@ class AdminController extends Controller
             ->where('shop_id', $shopId)
             ->first();
 
+        //同じ組み合わせがあったら保存しない。なければデータを保存する。
         if ($existingShopUser) {
             return redirect()->back()->with('error', '既にこの店舗の代表者になっています');
         }
@@ -50,10 +57,13 @@ class AdminController extends Controller
         return redirect()->route('users.show', ['user' => $user]);
     }
 
-    public function remove(Request $request,User $user)
+    public function remove(Request $request, User $user)
     {
+        //user_idとshop_idが一致しているレコードを削除する処理
         $shopId = $request->input('shop_id');
         ShopUser::where('user_id', $user->id)->where('shop_id', $shopId)->delete();
         return redirect()->back()->with('success', '店舗割り当てが削除されました');
     }
+
+
 }

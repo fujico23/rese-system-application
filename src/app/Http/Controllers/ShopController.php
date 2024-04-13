@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\ShopRequest;
 use Illuminate\Support\Carbon;
 
 class ShopController extends Controller
@@ -69,5 +70,18 @@ class ShopController extends Controller
         }
 
         return view('detail', compact('shop', 'reservationTimes')); // 予約可能な時間をビューに渡す
+    }
+
+    public function create()
+    {
+        $areas = Area::all();
+        $genres = Genre::all();
+        return view('shop_create', compact('areas', 'genres'));
+    }
+
+    public function store(ShopRequest $request)
+    {
+        Shop::create($request->validated());
+        return redirect()->route('shop.create')->with('success', '新しい店舗が追加されました！');
     }
 }

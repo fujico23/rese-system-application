@@ -25,7 +25,7 @@ use App\Http\Controllers\ManagementController;
 */
 
 
-//全ページにrole_idによるメニューバーの閲覧変更のミドルウェアを設定
+//'role'にて全ページに配置されているメニューバーをrole_idによって変更
 Route::middleware('role')->group(function () {
     //ログインしなくても一覧ページと詳細ページは閲覧可能
     Route::get('/thanks', [AuthController::class, 'thanks']);
@@ -44,8 +44,11 @@ Route::middleware('role')->group(function () {
         Route::get('/done', [ReservationController::class, 'done']);
         Route::delete('/mypage/reservation/{id}', [ReservationController::class, 'destroy'])->name('mypage.reservation.delete');
         Route::patch('/mypage/reservation/{id}', [ReservationController::class, 'update'])->name('mypage.reservation.update');
-
-        Route::get('/management', [ManagementController::class, 'index']);
+        //role_id 1 もしくは　2のみ店舗管理ページに遷移出来る
+        Route::middleware('shop.management')->group(function () {
+            Route::get('/management', [ManagementController::class, 'index'])->name('management');
+            Route::patch('/management/edit/{shop}', [ManagementController::class, 'update'])->name('management.edit');
+        });
     });
 
     //メール確認の通知
@@ -66,10 +69,15 @@ Route::middleware('role')->group(function () {
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-    //管理画面機能
-    Route::get('/admin', [AdminController::class, 'admin']);
-    Route::get('/admin/users/{user}', [AdminController::class, 'show'])->name('users.show');
-    Route::patch('/admin/users/{user}/update', [AdminController::class, 'update'])->name('role.update');
-    Route::post('/admin/users/{user}/assign', [AdminController::class, 'store'])->name('admin.users.assign');
-    Route::delete('/admin/users/{user}/remove', [AdminController::class, 'remove'])->name('admin.users.remove');
+    //role_id 1のみの人間が管理画面遷移出来る
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'admin']);
+        Route::get('/admin/users/{user}', [AdminController::class, 'show'])->name('users.show');
+        Route::patch('/admin/users/{user}/update', [AdminController::class, 'update'])->name('role.update');
+        Route::post('/admin/users/{user}/assign', [AdminController::class, 'store'])->name('admin.users.assign');
+        Route::delete('/admin/users/{user}/remove', [AdminController::class, 'remove'])->name('admin.users.remove');
+        Route::get('admin/shop/create', [ShopController::class, 'create'])->name('shop.create');
+        Route::post('admin/shop/post', [ShopController::class, 'store'])->name('shops.store');
+        Route::delete('admin/shop/delete', [ShopController::class, 'destroy'])->name('shop.delete');
+    });
 });

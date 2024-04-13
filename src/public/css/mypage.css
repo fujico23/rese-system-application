@@ -105,14 +105,14 @@
   transition: color 0.3s ease;
 }
 
-.select-field:hover {
+/*.select-field:hover {
   color: #f74b07;
   cursor: pointer;
 }
 .input-field :hover {
   color: #f74b07;
   cursor: pointer;
-}
+}*/
 
 .table__row__edit {
   padding: 10px 0 10px 30px;
@@ -246,7 +246,7 @@
   }
 
 /*　レスポンシブデザイン タブレット表示　*/
-@media only screen and (min-width: 768px) and (max-width: 959px) {
+@media only screen and (min-width: 769px) and (max-width: 959px) {
   .mypage__container {
     display: flex;
     flex-direction: column;
@@ -262,7 +262,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .mypage__container {
     display: flex;
     flex-direction: column;

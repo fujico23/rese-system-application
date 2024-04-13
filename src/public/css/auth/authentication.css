@@ -14,7 +14,6 @@
     width: 80%;
     margin: 0 auto;
     border: 1px #fff solid;
-    
   }
 
   .auth-form__group {
@@ -34,6 +33,10 @@
   .auth-form__group input::placeholder{
     color: #999;
   }
+
+  .auth-error {
+    color: red;
+}
 
   .auth-form__btn {
     margin: 20px auto;

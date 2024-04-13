@@ -1,0 +1,79 @@
+/* 管理者画面全体のスタイリング */
+.admin {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ヘッダーのスタイリング */
+.admin__header {
+    background-color: #007BFF;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* コンテナのスタイリング */
+.admin__container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* テーブルスタイリング */
+.admin__container__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin__container__table-row__header {
+    background-color: #b9b9b9;
+    color: #fcf9f9;
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+}
+
+.admin__container__table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.admin__container__table-row__detail {
+    text-align: left;
+    padding: 12px;
+    color: #666;
+}
+
+/* リンクスタイリング */
+.admin__container__table-row__detail a {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background-color: #ff4500;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.admin__container__table-row__detail a:hover {
+    background-color: #ff5722;
+    cursor: pointer;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .admin__container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .admin__container__table-row__header,
+    .admin__container__table-row__detail {
+        padding: 10px;
+    }
+}

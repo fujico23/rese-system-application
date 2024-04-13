@@ -1,7 +1,95 @@
-.user-detail__container__table-row {
-    border: 1px solid black; /* 1pxの黒い境界線を設定 */
+/* 全体のフォントと背景設定 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* ヘッダーのスタイル */
+.user-details__header {
+  background-color: #007BFF;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* コンテナスタイル */
+.user-details__container {
+  width: 80%;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* テーブルのスタイル */
+.user-details__container__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-detail__container__table-row__header,
+.user-detail__container__table-row__detail {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* フォームのスタイル */
+.user-detail__container__table-row__form-patch,
+.user-detail__container__table-row__form-post,
+.user-detail__container__table-row__form-delete
+ {
+  display: flex;
+  justify-content: space-between;
+}
+
+select, input[type="text"], button {
+  padding: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: 1px red solid;
+}
+.user-detail__container__table-shop-select {
+  width: 50%;
+  cursor: pointer;
+}
+
+.user-detail__container__table__btn-patch,
+.user-detail__container__table__btn-post,
+.user-detail__container_table__btn-delete
+ {
+  background-color: #ff4500;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff5722;
+}
+
+/* 特定のユーザーロールやショップ名を強調 */
+.user-details__container__table-row__detail form {
+  display: flex;
+  align-items: center;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .user-details__container {
+      width: 95%;
+      padding: 10px;
   }
 
-.user-details__container__table {
-    border-collapse: collapse; /* セルの境界線を統合する */
+  .user-details__container__table th,
+  .user-details__container__table td {
+      padding: 8px;
   }
+}
