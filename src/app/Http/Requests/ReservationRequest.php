@@ -29,7 +29,7 @@ class ReservationRequest extends FormRequest
   public function rules()
   {
     return [
-      'reservation_date' => 'required',
+      'reservation_date' => 'required|date',
       'reservation_time' => 'required',
       'number_of_guests' => 'required'
     ];
@@ -40,6 +40,7 @@ class ReservationRequest extends FormRequest
     return [
       'authorize' => '予約は会員のみ可能です。',
       'reservation_date.required' => '予約日を入力してください',
+      'reservation_date.date' => '予約日は日付形式で入力してください',
       'reservation_time.required' => '予約時間を入力してください',
       'number_of_guests.required' => '予約人数を入力してください'
     ];

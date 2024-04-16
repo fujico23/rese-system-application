@@ -34,7 +34,7 @@ class AdminController extends Controller
         if ($request->role_id == 3) {
             $user->shopUsers()->delete();
         }
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.show', $user)->with('success', 'ユーザーの権限を変更しました');
     }
 
     public function store(Request $request, User $user)
@@ -54,7 +54,7 @@ class AdminController extends Controller
             'user_id' => $user->id,
             'shop_id' => $shopId,
         ]);
-        return redirect()->route('users.show', ['user' => $user]);
+        return redirect()->route('users.show', ['user' => $user])->with('success', '選択した店舗の代表者の権限を与えました');
     }
 
     public function remove(Request $request, User $user)
@@ -62,7 +62,7 @@ class AdminController extends Controller
         //user_idとshop_idが一致しているレコードを削除する処理
         $shopId = $request->input('shop_id');
         ShopUser::where('user_id', $user->id)->where('shop_id', $shopId)->delete();
-        return redirect()->back()->with('success', '店舗割り当てが削除されました');
+        return redirect()->back()->with('success', '選択した店舗の代表者権限が削除されました');
     }
 
 

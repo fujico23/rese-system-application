@@ -20,6 +20,7 @@ class CreateShopsTable extends Migration
             $table->string('shop_name');
             $table->text('description')->nullable();
             $table->string('image_url')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

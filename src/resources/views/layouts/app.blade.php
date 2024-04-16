@@ -17,9 +17,7 @@
         <header class="header">
             <div class="header__heading">
                 <div class="header__heading__left">
-                    <div class="header__heading__left-logo1"></div>
-                    <h1 class="header__heading__left-logo2">Rese</h1>
-                    <div class="hamburger-menu" onclick="toggleMenu()">
+                <div class="hamburger-menu" onclick="toggleMenu()">
                         <i class="fa-solid fa-bars fa-lg" style="color: #0d09fb;"></i>
                     </div>
                     @if (Auth::check())
@@ -33,6 +31,9 @@
                     @else
                       @include('menu.menu4')
                     @endif
+                    <div class="header__heading__left-logo1"></div>
+                    <h1 class="header__heading__left-logo2">Rese</h1>
+
                 </div>
                 <div class="header__heading__right">
                     @if(Route::is('index'))

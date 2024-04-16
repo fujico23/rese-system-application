@@ -149,6 +149,25 @@ body {
   margin-left: 10px;
 }
 
+/* エラーメッセージのスタイリング */
+.alert {
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.alert-danger {
+  border-color: #f5c6cb;
+  color: #721c24;
+  background-color: #f8d7da;
+}
+
+.alert-success {
+  border-color: #c6f5d2;
+  color: #1c7232;
+  background-color: #d7f8dd;
+}
 
 
 /* 認証ページとthanks・doneページの枠組み*/
@@ -198,8 +217,8 @@ body {
 
 .menu__content {
   position: fixed;
-  top: 30px;
-  right: 10px;
+  top: 80px;
+  left: 10px;
   width: 80%;
   max-width: 300px;
   background-color: #fff;

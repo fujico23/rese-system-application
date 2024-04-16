@@ -23,6 +23,7 @@ class ShopController extends Controller
         $areas = Area::all();
         $genres = Genre::all();
         $shops = Shop::with(['area', 'genre', 'images'])
+            ->where('is_active', true)
             ->get();
 
         $favoriteShopIds = Auth::user() ? Auth::user()
@@ -33,7 +34,7 @@ class ShopController extends Controller
             $shop->isFavorited = in_array($shop->id, $favoriteShopIds);
         });
 
-        return view('index', compact('role_id','areas', 'genres', 'shops'));
+        return view('index', compact('role_id', 'areas', 'genres', 'shops'));
     }
 
     public function search(Request $request)

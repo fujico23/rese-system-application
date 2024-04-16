@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Http\Requests\ReservationRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function store(Request $request)
+    public function store(ReservationRequest $request)
     {
         $data = $request->only(['reservation_date', 'reservation_time', 'number_of_guests', 'shop_id']);
         $user_id = Auth::id();

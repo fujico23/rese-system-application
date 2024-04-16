@@ -13,7 +13,6 @@
                 <tr class="admin__container__table-row">
                     <th class="admin__container__table-row__header">ID</th>
                     <th class="admin__container__table-row__header">名前</th>
-                    <th class="admin__container__table-row__header">Email</th>
                     <th class="admin__container__table-row__header">役割</th>
                     <th class="admin__container__table-row__header"></th>
                 </tr>
@@ -21,8 +20,14 @@
                 <tr class="admin__container__table-row">
                     <td class="admin__container__table-row__detail">{{ $user->id }}</td>
                     <td class="admin__container__table-row__detail">{{ $user->name }}</td>
-                    <td class="admin__container__table-row__detail">{{ $user->email }}</td>
-                    <td class="admin__container__table-row__detail">{{ $user->role->role_name }}</td>
+                    <td class="admin__container__table-row__detail">
+                        @if($user->role->id == 1)
+                        管理人
+                        @elseif($user->role->id == 2)
+                        店舗代表
+                        @elseif($user->role->id == 3)
+                        利用者
+                        @endif</td>
                     <td class="admin__container__table-row__detail"><a href="{{ route('users.show', $user) }}">詳細</a></td>
                 </tr>
                 @endforeach

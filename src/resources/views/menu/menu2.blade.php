@@ -14,7 +14,8 @@
       </form>
     </li>
     <li class="menu__link"><a href="/mypage">Mypage</a></li>
-    <li class="menu__link"><a href="/management">Shop Management</a></li>
+    <li class="menu__link"><a href="/shop/management">Shop Management</a></li>
+    <li class="menu__link"><a href="/shop/reservation/confirm">Shop Reservation Confirm</a></li>
   </ul>
 </div>
 

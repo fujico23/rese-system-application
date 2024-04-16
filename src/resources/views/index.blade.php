@@ -8,13 +8,17 @@
 <div class="card-container">
   @foreach ($shops as $shop)
   <div class="card">
-    <div class="shop__img">
-      @if ($shop->images->isNotEmpty())
+  <div class="shop__img">
+  @if ($shop->images->isNotEmpty())
+    @if (Str::startsWith($shop->images->first()->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
       <img src="{{ $shop->images->first()->image_url }}" alt="{{ $shop->shop_name }}">
-      @else
-      <p>準備中です</p>
-      @endif
-    </div>
+    @else
+      <img src="{{ asset($shop->images->first()->image_url) }}" alt="{{ $shop->shop_name }}">
+    @endif
+  @else
+    <p>準備中です</p>
+  @endif
+</div>
     <div class="card__details">
         <h2 class="card__details__name">{{ $shop->shop_name }}</h2>
         <span class="card__details__area hashtag">#{{ $shop->area->area_name }}</span>

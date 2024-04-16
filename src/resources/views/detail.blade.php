@@ -14,7 +14,15 @@
         <h2 class="shop-name">{{ $shop->shop_name }}</h2>
     </div>
     <div class="shop__img">
-        <img src="{{ $shop->images->first()->image_url }}" alt="Shop 1">
+    @if ($shop->images->isNotEmpty())
+    @if (Str::startsWith($shop->images->first()->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
+      <img src="{{ $shop->images->first()->image_url }}" alt="{{ $shop->shop_name }}">
+    @else
+      <img src="{{ asset($shop->images->first()->image_url) }}" alt="{{ $shop->shop_name }}">
+    @endif
+  @else
+    <p>準備中です</p>
+  @endif
     </div>
 
     <div class="shop-details">
@@ -41,21 +49,38 @@
                 </div>
                 @endif
                 <div class="reservation-date form__tag">
-                    <input type="date" name="reservation_date" id="reservation_date" value="{{ date('Y-m-d') }}">
+                    <input type="date" name="reservation_date" id="reservation_date" value="予約日を選択してください">
                 </div>
+                <p class="reservation-error">
+                    @error('reservation_date')
+                    {{ $message }}
+                    @enderror
+                </p>
                 <div class="reservation-time form__tag">
                     <select name="reservation_time">
+                        <option value="">予約時間を選択してください</option>
                         @foreach($reservationTimes as $time)
                         <option value="{{ $time }}">{{ $time }}</option>
                         @endforeach
                     </select>
                 </div>
+                <p class="reservation-error">
+                    @error('reservation_time')
+                    {{ $message }}
+                    @enderror
+                </p>
                 <div class="numer-of-guests form__tag">
                     <select name="number_of_guests">
+                        <option value="">予約人数を選択してください</option>
                         @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}人</option>
                             @endfor
                     </select>
                 </div>
+                <p class="reservation-error">
+                    @error('number_of_guests')
+                    {{ $message }}
+                    @enderror
+                </p>
                 <input type="hidden" name="shop_id" value="{{ $shop->id }}">
 
                 <table class="reservation__table">

@@ -89,6 +89,10 @@
     margin-bottom: 10px;
 }
 
+.reservation-error {
+    color: red;
+}
+
 .form__tag input,
 .form__tag select {
     width: 100%;

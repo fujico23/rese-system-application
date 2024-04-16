@@ -46,8 +46,9 @@ Route::middleware('role')->group(function () {
         Route::patch('/mypage/reservation/{id}', [ReservationController::class, 'update'])->name('mypage.reservation.update');
         //role_id 1 もしくは　2のみ店舗管理ページに遷移出来る
         Route::middleware('shop.management')->group(function () {
-            Route::get('/management', [ManagementController::class, 'index'])->name('management');
+            Route::get('/shop/management', [ManagementController::class, 'index'])->name('management');
             Route::patch('/management/edit/{shop}', [ManagementController::class, 'update'])->name('management.edit');
+            Route::get('/shop/reservation/confirm', [ManagementController::class, 'show']);
         });
     });
 

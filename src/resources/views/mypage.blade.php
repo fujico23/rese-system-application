@@ -9,7 +9,7 @@
 <h2 class="mypage__name">{{Auth::user()->name }} さん</h2>
 @if(session('success'))
 <div class="alert alert-success">
-    <i class="fa fa-check-circle" aria-hidden="true"></i> {{ session('success') }}
+    {{ session('success') }}
 </div>
 @endif
 <div class="mypage__container">

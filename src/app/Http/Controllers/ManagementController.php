@@ -25,22 +25,54 @@ class ManagementController extends Controller
         return view ('shop_management', compact('shops', 'areas', 'genres'));
     }
 
-    public function update(Request $request, Shop $shop)
+public function update(Request $request, Shop $shop)
+{
+    // リクエストから更新するデータを取得
+    $data = $request->only(['shop_name', 'area_id', 'genre_id', 'description', 'is_active']);
+
+    // もし送信されたデータがnullの場合、現在の値を代入する
+    if ($data['area_id'] === null) {
+        $data['area_id'] = $shop->area_id;
+    }
+
+    if ($data['genre_id'] === null) {
+        $data['genre_id'] = $shop->genre_id;
+    }
+
+    // 画像がアップロードされているかを確認
+    if ($request->hasFile('image_url')) {
+        $file = $request->file('image_url');
+        $filename = $file->store('', 'local');
+        $data['image_url'] = 'shop_images/' . $filename;
+    }
+
+    // is_active の状態を更新する
+    $data['is_active'] = $request->has('is_active') ? true : false;
+
+    // ショップ情報を更新
+    $shop->update($data);
+
+    // 画像の関連データを保存する
+    if ($request->hasFile('image_url')) {
+        // 画像がアップロードされている場合、Imageモデルを使ってデータベースに保存する
+        $image = new Image();
+        $image->shop_id = $shop->id; // 店舗IDを設定
+        $image->image_url = $data['image_url']; // 画像のファイルパスを保存
+        $image->save();
+    }
+
+    return redirect()->route('management')->with('success', '店舗が更新されました！');
+}
+
+    public function show()
     {
-        // リクエストから更新するデータを取得
-        $data = $request->only(['shop_name', 'area_id', 'genre_id', 'description']);
-        // もし送信されたデータがnullの場合、現在の値を代入する
-        if ($data['area_id'] === null) {
-            $data['area_id'] = $shop->area_id;
-        }
+        $userId = Auth::id();
+        $shops = Shop::join('shop_users', 'shops.id', '=', 'shop_users.shop_id')
+        ->where('shop_users.user_id', $userId)
+        ->select('shops.*')
+        ->get();
 
-        if ($data['genre_id'] === null) {
-            $data['genre_id'] = $shop->genre_id;
-        }
-
-        $shop->update($data);
-
-        return redirect()->route('management')->with('success', '店舗が更新されました！');
+        return view ('shop_reservation_confirm', compact('shops'));
     }
 
 }

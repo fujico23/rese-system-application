@@ -70,7 +70,9 @@
 - php artisan db:seed --class=GenresTableSeeder
 - php artisan db:seed --class=AreasTableSeeder
 - php artisan db:seed --class=ShopsTableSeeder
+- php artisan db:seed --class=ImagesTableSeeder
 - php artisan db:seed --class=RolesTableSeeder
+- php artisan db:seed --class=UsersTableSeeder
 
 ## **環境変数**
 ### 開発環境(ローカルマシーンにDockerで環境構築)
