@@ -19,9 +19,10 @@ class UserController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
-        $reservations = Reservation::with('shop')
+        $userReservations = Reservation::with('shop')
             ->where('user_id', $user->id)
             ->get();
+        $reservationCount = count($userReservations);
 
         $startTime = Carbon::createFromTime(17, 0, 0);
         $endTime = Carbon::createFromTime(21, 0, 0);
@@ -33,7 +34,7 @@ class UserController extends Controller
             $reservationTimes[] = $time->format('H:i'); // 時間を配列に追加
         }
 
-        return view('mypage', compact('role_id','favorites', 'reservations', 'reservationTimes'));
+        return view('mypage', compact('role_id', 'favorites', 'userReservations', 'reservationCount','reservationTimes'));
     }
 
     public function destroy(Request $request)

@@ -58,10 +58,27 @@ select, input[type="text"], button {
   margin-right: 10px;
   cursor: pointer;
 }
-.user-detail__container__table-shop-select,
+.user-detail__container__table-shop-select {
+  width: 50%;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
 .user-detail__container__table-shop-input {
   width: 50%;
   cursor: pointer;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.user-detail__container__table-role-select {
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 .user-detail__container__table__btn-patch,
@@ -75,7 +92,9 @@ select, input[type="text"], button {
   transition: background 0.3s ease;
 }
 
-button:hover {
+.user-detail__container__table__btn-patch:hover,
+.user-detail__container__table__btn-post:hover,
+.user-detail__container__table__btn-delete:hover {
   background-color: #ff5722;
 }
 

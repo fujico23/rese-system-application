@@ -5,12 +5,12 @@
     max-width: 800px;
 
   }
-  
+
   .shop-management__header {
     color: #007bff;
     text-align: center;
   }
-  
+
   .shop-management__container {
     margin-top: 20px;
     background-color: #fff;
@@ -18,50 +18,50 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .shop-management__container__table {
     width: 100%;
     margin-bottom: 20px;
     border-collapse: collapse;
   }
-  
+
   .shop-management__container__table th,
   .shop-management__container__table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
   }
-  
+
   .shop-management__container__table th {
     text-align: left;
     font-weight: bold;
     width: 30%;
   }
-  
+
   .shop-management__container__table-row__detail-input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
   }
-  
+
   .shop-management__container__table-row__detail-select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
   }
-  
+
   .shop-management__container__table-row__detail-textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
   }
-  
+
   .shop-management__container__table-row__form-post {
     margin-bottom: 10px;
   }
-  
+
   .shop-management__container__table__btn-post {
     background-color: #007bff;
     color: #fff;
@@ -71,11 +71,11 @@
     border-radius: 4px;
     float: right;
   }
-  
+
   .shop-management__container__table__btn-post:hover {
     background-color: #0056b3;
   }
-  
+
   .alert {
     padding: 15px;
     margin-bottom: 20px;

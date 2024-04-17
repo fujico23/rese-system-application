@@ -15,78 +15,69 @@
 <div class="mypage__container">
     <div class="reservation">
         <h3 class="reservation__confirm">予約状況</h3>
-        @foreach($reservations as $reservation)
+        @foreach($userReservations as $key => $reservation)
         <div class="reservation__container">
-            <div class="reservation__heading">
-                <div class="clock-img">
+            <div class="reservation__container__heading">
+                <div class="reservation__container__heading__clock-img">
                     <i class="fa-regular fa-clock fa-xl" style="color: #f5f7fa;"></i>
                 </div>
-                <h4 class="reservation__number">予約1</h4>
-                <form class="reservation-delete-form" action="{{ route('mypage.reservation.delete', ['id' => $reservation->id]) }}" method="post">
+                <h4 class="reservation__container__heading__number">予約{{ $key + 1 }}</h4>
+                <form class="reservation__container__heading__form-delete" action="{{ route('mypage.reservation.delete', ['id' => $reservation->id]) }}" method="post">
                     @csrf
                     @method('delete')
-                    <div class="reservation__delete">
+                    <div class="reservation__container__heading__form__inner">
                         <button class="fa-regular fa-circle-xmark fa-2xl" style="color: #f2f4f8;" type="submit" value=""></button>
                     </div>
                 </form>
             </div>
-            <div class="table">
-                <form class="reservation-edit-form" action="{{ route('mypage.reservation.update', ['id' => $reservation->id]) }}" method="post">
-                    @method('patch')
-                    @csrf
-                    <table class="reservation__table">
-                        <div class="table__row">
-                            <tr class="table__row__inner">
-                                <td class="table__row__name">Shop</td>
-                                <td class="table__row__edit">{{ $reservation->shop->shop_name }}</td>
-                            </tr>
-                        </div>
-                        <div class="table__row">
-                            <tr class="table__row__inner">
-                                <td class="table__row__name">Date</td>
-                                <td class="table__row__edit">
-                                    <input id="editableInput{{ $reservation->id }}" disabled type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" class="input-field">
-                                </td>
-                            </tr>
-                        </div>
-                        <div class="table__row">
-                            <tr class="table__row__inner">
-                                <td class="table__row__name">Time</td>
-                                <td class="table__row__edit">
-                                    <select disabled id="mySelect{{ $reservation->id }}" name="reservation_time" class="editable select-field">
-                                        <option value="{{ $reservation->reservation_time }}">{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</option>
-                                        @foreach($reservationTimes as $time)
-                                        <option value="{{ $time }}">{{ $time }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr>
-                        </div>
-                        <div class="table__row">
-                            <tr class="table__row__inner">
-                                <td class="table__row__name">Number</td>
-                                <td class="table__row__edit">
-                                    <select disabled id="mySelectNumber{{ $reservation->id }}" name="number_of_guests" class="editable select-field">
-                                        <option value="{{ $reservation->number_of_guests }}">{{ $reservation->number_of_guests }}</option>
-                                        @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}</option>
-                                            @endfor
-                                    </select>
-                                </td>
-                            </tr>
-                        </div>
-                    </table>
-                    <div class="reservation__update">
-                        <div class="reservation-edit">
-                            <i class="fa-regular fa-pen-to-square fa-lg"></i>
-                            <button id="enableEdit{{ $reservation->id }}" class="reservation-edit-btn btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
-                        </div>
-                        <div class="reservation-submit">
-                            <i class="fa-regular fa-paper-plane fa-lg"></i>
-                            <button class="reservation-submit-btn btn" type="submit">確定</button>
-                        </div>
+
+            <form class="reservation__container__table__form-edit" action="{{ route('mypage.reservation.update', ['id' => $reservation->id]) }}" method="post">
+                @method('patch')
+                @csrf
+                <table class="reservation__container__table">
+                    <tr class="reservation__container__table__row">
+                        <th class="reservation__container__table__row__header">Shop</th>
+                        <td class="reservation__container__table__row__description">{{ $reservation->shop->shop_name }}</td>
+                    </tr>
+                    <tr class="reservation__container__table__row">
+                        <th class="reservation__container__table__row__header">Date</th>
+                        <td class="reservation__container__table__row__description">
+                            <input class="input-field" id="editableInput{{ $reservation->id }}" disabled type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" >
+                        </td>
+                    </tr>
+                    <tr class="reservation__container__table__row">
+                        <th class="reservation__container__table__row__header">Time</th>
+                        <td class="reservation__container__table__row__description">
+                            <select disabled id="mySelect{{ $reservation->id }}" name="reservation_time" class="editable select-field">
+                                <option value="{{ $reservation->reservation_time }}">{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</option>
+                                @foreach($reservationTimes as $time)
+                                <option value="{{ $time }}">{{ $time }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="reservation__container__table__row">
+                        <th class="reservation__container__table__row__header">Number</th>
+                        <td class="reservation__container__table__row__description">
+                            <select disabled id="mySelectNumber{{ $reservation->id }}" name="number_of_guests" class="editable select-field">
+                                <option value="{{ $reservation->number_of_guests }}">{{ $reservation->number_of_guests }}</option>
+                                @for ($count = 1; $count <= 20; $count++) <option value="{{ $count }}">{{ $count }}</option>
+                                    @endfor
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div class="reservation__container__bottom">
+                    <div class="reservation__container__bottom-edit">
+                        <i class="fa-regular fa-pen-to-square fa-lg"></i>
+                        <button id="enableEdit{{ $reservation->id }}" class="reservation__container__bottom-edit__btn btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
                     </div>
-                </form>
-            </div>
+                    <div class="reservation__container__bottom-submit">
+                        <i class="fa-regular fa-paper-plane fa-lg"></i>
+                        <button class="reservation__container__bottom-submit__btn btn" type="submit">確定</button>
+                    </div>
+                </div>
+            </form>
         </div>
         @endforeach
     </div>
@@ -127,7 +118,7 @@
 
 
 <script>
-    document.querySelectorAll('.reservation-delete-form').forEach(function(form) {
+    document.querySelectorAll('.reservation__container__heading__form-delete').forEach(function(form) {
         form.onsubmit = function(event) {
 
             const isConfirmed = confirm('本当に予約を削除しますか？');
@@ -148,7 +139,7 @@
     }
 
     // 予約変更の確認ダイアログ
-    document.querySelectorAll('.reservation-edit-form').forEach(form => {
+    document.querySelectorAll('.reservation__container__table__form-edit').forEach(form => {
         form.onsubmit = function(event) {
             const isConfirmed = confirm('本当に予約を変更しますか？');
             if (!isConfirmed) {
