@@ -73,7 +73,7 @@
                                 </option>
                                 @endforeach
                             </select>
-                            <button class="user-detail__container__table__btn-post" type="submit">作成</button>
+                            <button class="user-detail__container__table__btn-post" type="submit">追加</button>
                         </form>
                     </td>
                 </tr>

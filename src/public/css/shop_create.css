@@ -39,6 +39,15 @@
     text-align: left;
 }
 
+.shop-create__container__table-row__header span {
+    color: red;
+    margin-left: 5px;
+    font-size: 90%;
+    padding: 2px 4px;
+    background-color: #ffe5e5;
+    border-radius: 2px;
+}
+
 .shop-create__container__table-row {
     border-bottom: 1px solid #ddd;
 }
@@ -80,35 +89,28 @@
     background-color: #0056b3;
 }
 
-/* エラーメッセージのスタイリング */
-.alert {
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-top: 5px;
-}
 
-.alert-danger {
-    border-color: #f5c6cb;
-    color: #721c24;
-    background-color: #f8d7da;
-}
-
-.alert-success {
-    border-color: #c6f5d2;
-    color: #1c7232;
-    background-color: #d7f8dd;
-}
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
     .shop-create__container {
         width: 95%;
-        padding: 10px;
+        padding: 5px;
     }
 
-    .shop-create__container__table-row__header,
-    .shop-create__container__table-row__detail {
-        padding: 10px;
+    .shop-create__container__table-row__header {
+        white-space: nowrap;
+        padding: 5px;
+        font-size: 75%;
     }
+
+    .shop-create__container__table-row__header span {
+        font-size: 75%;
+        padding: 2px 3px;
+    }
+
+    .shop-create__container__table-row__detail {
+        padding: 8px;
+    }
+
 }

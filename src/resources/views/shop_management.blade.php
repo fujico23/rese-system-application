@@ -15,24 +15,21 @@
   @foreach ($shops as $shop)
   <div class="shop-management__container">
     <table class="shop-management__container__table">
-      <form class="shop-management__container__table-row__form-post" action="{{ route('management.edit', $shop) }}" method="POST" enctype="multipart/form-data">
-        @method('patch')
-        @csrf
-        <div class="shop-management__container__table__inner">
+      <div class="shop-management__container__table__inner">
+        <form class="shop-management__container__table-row__form-post" action="{{ route('management.edit', $shop) }}" method="POST" enctype="multipart/form-data">
+          @method('patch')
+          @csrf
+          <tr class="shop-management__container__table-row">
+            <th class="shop-management__container__table-row__header">公開</th>
+            <td class="shop-management__container__table-row__detail">
+              <input type="checkbox" name="is_active" value="1" {{ $shop->is_active ? 'checked' : '' }}>
+            </td>
+          </tr>
           <tr class="shop-management__container__table-row">
             <th class="shop-management__container__table-row__header">店舗名</th>
             <td class="shop-management__container__table-row__detail">
               <input type="text" name="shop_name" value="{{ old('shop_name', $shop->shop_name) }}">
             </td>
-          </tr>
-          <tr class="shop-management__container__table-row">
-            <th class="shop-management__container__table-row__header">店舗画像</th>
-            <td class="shop-management__container__table-row__detail">
-              <input class="shop-management__container__table-row__detail-input" type="file" name="image_url">
-            </td>
-            @error('image_url')
-            <p class="alert alert-danger">{{ $message }}</p>
-            @enderror
           </tr>
           <tr class="shop-management__container__table-row">
             <th class="shop-management__container__table-row__header">エリア</th>
@@ -70,17 +67,43 @@
             @enderror
           </tr>
           <tr class="shop-management__container__table-row">
-            <th class="shop-management__container__table-row__header">公開</th>
+            <th class="shop-management__container__table-row__header">店舗画像</th>
             <td class="shop-management__container__table-row__detail">
-              <input type="checkbox" name="is_active" value="1" {{ $shop->is_active ? 'checked' : '' }}>
+              <input class="shop-management__container__table-row__detail-input" type="file" name="image_url">
             </td>
+            @error('image_url')
+            <p class="alert alert-danger">{{ $message }}</p>
+            @enderror
           </tr>
-        </div>
-        <button class="shop-management__container__table__btn-post" type="submit">編集</button>
-      </form>
+          <button class="shop-management__container__table__btn-post" type="submit">編集</button>
+        </form>
+        <tr class="shop-management__container__table-row">
+          <th class="shop-management__container__table-row__header">店舗画像一覧</th>
+          <td class="shop-management__container__table-row__detail">
+            <ul class="shop-management__container__table-row__detail__image-ul">
+              @if ($shop->images->isNotEmpty())
+              @foreach($shop->images as $image)
+              <li class="shop-management__container__table-row__detail__image-ul-li">
+                @if (Str::startsWith($image->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
+                <input type="checkbox" name="images[]" value="{{ $image->id }}"><img src="{{ $image->image_url }}" alt="{{ $shop->shop_name }}">
+                @else
+                <input type="checkbox" name="images[]" value="{{ $image->id }}"><img src="{{ asset('storage/' . $image->image_url) }}" alt="Shop Image">
+                @endif
+              </li>
+              @endforeach
+              @endif
+            </ul>
+          </td>
+        </tr>
+        <!-- 画像削除ボタンのフォームをループ内に繰り返し配置 -->
+        <form action="{{ route('images.delete',['image' => $shop->images->first()->id]) }}" method="POST" id="delete-images-form">
+          @csrf
+          @method('DELETE')
+          <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+          <button type="submit">選択した画像を削除</button>
+        </form>
+      </div>
     </table>
-
   </div>
-  @endforeach
-</div>
+@endforeach
 @endsection

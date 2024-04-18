@@ -32,8 +32,14 @@ return [
 
         'local' => [
             'driver' => 'local',
-            //'root' => storage_path('app'),
-            'root' => public_path('shop_images'),
+            'root' => storage_path('app'),
+            //'root' => public_path('shop_images'),
+        ],
+        'shop_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/shop_images'),
+            'url' => env('APP_URL').'/storage/shop_images',
+            'visibility' => 'public',
         ],
 
         'public' => [

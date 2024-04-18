@@ -14,15 +14,15 @@
         <h2 class="shop-name">{{ $shop->shop_name }}</h2>
     </div>
     <div class="shop__img">
-    @if ($shop->images->isNotEmpty())
-    @if (Str::startsWith($shop->images->first()->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
-      <img src="{{ $shop->images->first()->image_url }}" alt="{{ $shop->shop_name }}">
-    @else
-      <img src="{{ asset($shop->images->first()->image_url) }}" alt="{{ $shop->shop_name }}">
-    @endif
-  @else
-    <p>準備中です</p>
-  @endif
+        @if ($shop->images->isNotEmpty())
+        @if (Str::startsWith($shop->images->first()->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
+        <img src="{{ $shop->images->first()->image_url }}" alt="{{ $shop->shop_name }}">
+        @else
+        <img src="{{ asset('storage/' . $shop->images->first()->image_url) }}" alt="{{ $shop->shop_name }}">
+        @endif
+        @else
+        <p>準備中です</p>
+        @endif
     </div>
 
     <div class="shop-details">
@@ -43,11 +43,6 @@
             @csrf
             <div class="reservation-form__inner">
                 <h2 class="reservation__heading">予約</h2>
-                @if(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-                @endif
                 <div class="reservation-date form__tag">
                     <input type="date" name="reservation_date" id="reservation_date" value="予約日を選択してください">
                 </div>

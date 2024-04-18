@@ -86,7 +86,7 @@
 .form__tag {
     background-color: #fff;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .reservation-error {
@@ -102,7 +102,8 @@
 .reservation__table{
     background-color: #4D7FFF;
     border-radius: 3px;
-    margin-bottom: 200px;
+    margin-top: 20px;
+    margin-bottom: 180px;
     padding: 20px;
     width: 90%;
 }

@@ -42,7 +42,7 @@
                     <tr class="reservation__container__table__row">
                         <th class="reservation__container__table__row__header">Date</th>
                         <td class="reservation__container__table__row__description">
-                            <input class="input-field" id="editableInput{{ $reservation->id }}" disabled type="date" name="reservation_date" value="{{ $reservation->reservation_date }}" >
+                            <input class="input-field" id="editableInput{{ $reservation->id }}" disabled type="date" name="reservation_date" value="{{ $reservation->reservation_date }}">
                         </td>
                     </tr>
                     <tr class="reservation__container__table__row">
@@ -68,14 +68,8 @@
                     </tr>
                 </table>
                 <div class="reservation__container__bottom">
-                    <div class="reservation__container__bottom-edit">
-                        <i class="fa-regular fa-pen-to-square fa-lg"></i>
-                        <button id="enableEdit{{ $reservation->id }}" class="reservation__container__bottom-edit__btn btn" type="button" onclick="enableEdit('{{ $reservation->id }}')">編集</button>
-                    </div>
-                    <div class="reservation__container__bottom-submit">
-                        <i class="fa-regular fa-paper-plane fa-lg"></i>
-                        <button class="reservation__container__bottom-submit__btn btn" type="submit">確定</button>
-                    </div>
+                    <button id="enableEdit{{ $reservation->id }}" class="reservation__container__bottom-edit__btn btn" type="button" onclick="enableEditAndEnableSubmit('{{ $reservation->id }}')">編集</button>
+                    <button id="enableSubmit{{ $reservation->id }}" class="reservation__container__bottom-submit__btn btn" type="submit" disabled>確定</button>
                 </div>
             </form>
         </div>
@@ -88,7 +82,12 @@
             @foreach($favorites as $favorite)
             <div class="card">
                 <div class="shop__img">
+                    @if (Str::startsWith($favorite->shop->images->first()->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
                     <img src="{{ $favorite->shop->images->first()->image_url }}" alt="{{ $favorite->shop->shop_name }}">
+                    @else
+                    <img src="{{ asset('storage/' . $favorite->shop->images->first()->image_url) }}" alt="{{ $favorite->shop->shop_name }}">
+                    @endif
+
                 </div>
                 <div class="shop__details">
                     <div>
@@ -118,6 +117,7 @@
 
 
 <script>
+    // 予約削除の確認ダイアログ
     document.querySelectorAll('.reservation__container__heading__form-delete').forEach(function(form) {
         form.onsubmit = function(event) {
 
@@ -128,16 +128,6 @@
             }
         };
     });
-    // ボタンをクリックしたらSelectタブとInputを有効にする
-    function enableEdit(id) {
-        var editableElements = document.querySelectorAll("#editableInput" + id + ", #mySelect" + id + ", #mySelectNumber" + id);
-        for (var i = 0; i < editableElements.length; i++) {
-            editableElements[i].removeAttribute("disabled");
-            editableElements[i].style.backgroundColor = "#fff";
-            editableElements[i].style.color = "black";
-        }
-    }
-
     // 予約変更の確認ダイアログ
     document.querySelectorAll('.reservation__container__table__form-edit').forEach(form => {
         form.onsubmit = function(event) {
@@ -147,6 +137,22 @@
             }
         };
     });
+
+    // ボタンをクリックしたらSelectタブとInputを有効にする
+    function enableEditAndEnableSubmit(reservationId) {
+        var editableElements = document.querySelectorAll("#editableInput" + reservationId + ", #mySelect" + reservationId + ", #mySelectNumber" + reservationId);
+        for (var i = 0; i < editableElements.length; i++) {
+            editableElements[i].removeAttribute("disabled");
+            editableElements[i].style.backgroundColor = "#fff";
+            editableElements[i].style.color = "black";
+        }
+
+        // id="enableEdit{{ $reservation->id }}" のボタンを非アクティブにする
+        document.getElementById("enableEdit" + reservationId).disabled = true;
+
+        // id="enableSubmit{{ $reservation->id }}" のボタンをアクティブにする
+        document.getElementById("enableSubmit" + reservationId).disabled = false;
+    }
 </script>
 
 @endsection

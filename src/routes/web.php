@@ -49,6 +49,7 @@ Route::middleware('role')->group(function () {
             Route::get('/shop/management', [ManagementController::class, 'index'])->name('management');
             Route::patch('/management/edit/{shop}', [ManagementController::class, 'update'])->name('management.edit');
             Route::get('/shop/reservation/confirm', [ManagementController::class, 'show']);
+            Route::delete('/shop/management//image/delete/{image}', [ManagementController::class, 'destroy'])->name('images.delete');
         });
     });
 
@@ -70,7 +71,7 @@ Route::middleware('role')->group(function () {
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-    //role_id 1のみの人間が管理画面遷移出来る
+    //role_id 1のみが管理画面遷移出来る
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [AdminController::class, 'admin']);
         Route::get('/admin/users/{user}', [AdminController::class, 'show'])->name('users.show');
