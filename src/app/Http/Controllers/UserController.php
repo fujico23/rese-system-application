@@ -12,7 +12,6 @@ class UserController extends Controller
 {
     public function index()
     {
-
         $user = Auth::user();
         $role_id = $user->role_id;
         $favorites = Favorite::with('shop')

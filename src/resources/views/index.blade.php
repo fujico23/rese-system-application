@@ -23,6 +23,9 @@
         <h2 class="card__details__name">{{ $shop->shop_name }}</h2>
         <span class="card__details__area hashtag">#{{ $shop->area->area_name }}</span>
         <span class="card__details__genre hashtag">#{{ $shop->genre->genre_name }}</span>
+        @if($shop->isReserved)
+            <span><strong>予約済</strong></span>
+        @endif
     </div>
     <div class="card__footer">
       <a href="{{ route('shop.detail', $shop) }}" class="card__footer-btn btn">詳しく見る</a>

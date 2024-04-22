@@ -7,6 +7,7 @@ use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class ManagementController extends Controller
@@ -75,10 +76,25 @@ class ManagementController extends Controller
         return view('shop_reservation_confirm', compact('shops'));
     }
 
-    public function destroy(Image $image)
+    public function destroy(Request $request)
     {
-        $image->delete();
-        return redirect()->route('management')->with('success', '画像が削除されました！');
+        // チェックボックスから送信された画像IDの配列を取得
+        $imageIds = $request->input('images', []);
+        if (!empty($imageIds)) {
+            // IDに基づいて画像データを取得
+            $images = Image::whereIn('id', $imageIds)->get();
 
+            foreach ($images as $image) {
+                // ストレージから画像ファイルを削除
+                $filePath = 'public/' . $image->image_url;
+                Storage::delete($filePath);
+
+                // データベースから画像のレコードを削除
+                $image->delete();
+            }
+
+            return redirect()->route('management')->with('success', '選択された画像が削除されました！');
+        }
+        return back()->withErrors(['message' => '削除する画像が選択されていません。']);
     }
 }

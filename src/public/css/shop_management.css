@@ -58,15 +58,19 @@
 }
 
  /* 画像のサイズを制御するCSS */
+ #delete-images-form {
+
+  flex-direction: column;
+  align-items: center;
+}
 .shop-management__container__table-row__detail__image-ul {
   display: flex;
   list-style: none;
-  border: 1px red solid;
   flex-wrap: wrap;
 }
 
 .shop-management__container__table-row__detail__image-ul-li {
-  width: 100px;
+  width: 200px;
   height: auto;
   margin-right: 10px;
 }
@@ -74,6 +78,26 @@
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.shop-management__container__table-row__detail__delete-btn {
+  width: 15%;
+  background-color: #ff5100;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.shop-management__container__table-row__detail__delete-btn:hover {
+  background-color: #642203;
 }
 
 .shop-management__container__table-row__form-post {
@@ -88,6 +112,7 @@
   cursor: pointer;
   border-radius: 4px;
   float: right;
+  transition: background-color 0.3s ease;
 }
 
 .shop-management__container__table__btn-post:hover {
@@ -101,6 +126,11 @@
 }
 
 @media screen and (max-width:767px) {
+  #delete-images-form {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
   .shop-management__container__table-row__detail__image-ul {
     flex-direction: column;
     align-items: center;
@@ -108,5 +138,14 @@
   .shop-management__container__table-row__detail__image-ul-li {
     margin-right: 0;
     margin-bottom: 10px;
+  }
+  .shop-management__container__table-row__detail__delete-btn {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 10px;
+    width: 100px; /* 幅を固定する */
+    white-space: nowrap; /* テキストの折り返しを禁止する */
+    overflow: hidden;
   }
 }

@@ -80,30 +80,31 @@
         <tr class="shop-management__container__table-row">
           <th class="shop-management__container__table-row__header">店舗画像一覧</th>
           <td class="shop-management__container__table-row__detail">
-            <ul class="shop-management__container__table-row__detail__image-ul">
-              @if ($shop->images->isNotEmpty())
-              @foreach($shop->images as $image)
-              <li class="shop-management__container__table-row__detail__image-ul-li">
-                @if (Str::startsWith($image->image_url, 'http')) <!-- S3のURLかどうかを確認 -->
-                <input type="checkbox" name="images[]" value="{{ $image->id }}"><img src="{{ $image->image_url }}" alt="{{ $shop->shop_name }}">
-                @else
-                <input type="checkbox" name="images[]" value="{{ $image->id }}"><img src="{{ asset('storage/' . $image->image_url) }}" alt="Shop Image">
-                @endif
-              </li>
-              @endforeach
-              @endif
-            </ul>
+            @if ($shop->images->isNotEmpty())
+            <form action="{{ route('images.delete') }}" method="POST" id="delete-images-form">
+              @csrf
+              @method('DELETE')
+              <ul class="shop-management__container__table-row__detail__image-ul">
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                @foreach($shop->images as $image)
+                <li class="shop-management__container__table-row__detail__image-ul-li">
+                  @if (Str::startsWith($image->image_url, 'http'))
+                  <input type="checkbox" name="images[]" value="{{ $image->id }}">
+                  <img src="{{ $image->image_url }}" alt="{{ $shop->shop_name }}">
+                  @else
+                  <input type="checkbox" name="images[]" value="{{ $image->id }}">
+                  <img src="{{ Storage::url($image->image_url) }}" alt="Shop Image">
+                  @endif
+                </li>
+                @endforeach
+              </ul>
+              <button class="shop-management__container__table-row__detail__delete-btn" type="submit">画像削除</button>
+            </form>
+            @endif
           </td>
         </tr>
-        <!-- 画像削除ボタンのフォームをループ内に繰り返し配置 -->
-        <form action="{{ route('images.delete',['image' => $shop->images->first()->id]) }}" method="POST" id="delete-images-form">
-          @csrf
-          @method('DELETE')
-          <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-          <button type="submit">選択した画像を削除</button>
-        </form>
       </div>
     </table>
   </div>
-@endforeach
-@endsection
+  @endforeach
+  @endsection

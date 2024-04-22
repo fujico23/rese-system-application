@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'shop_id', 'reservation_date', 'reservation_time', 'number_of_guests'];
+    protected $fillable = ['user_id', 'shop_id', 'reservation_date', 'reservation_time', 'number_of_guests', 'status'];
 
     // データベースに保存する前に時間の形式を変更するMutator
     public function setReservationTimeAttribute($value)
@@ -25,5 +25,10 @@ class Reservation extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
     }
 }

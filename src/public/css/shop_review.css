@@ -1,0 +1,73 @@
+.review__heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.review__form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.review__form__group {
+    margin-bottom: 20px;
+}
+
+.review__form__group-evaluation{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+.review__form__group-evaluation input[type='radio']{
+    display: none;
+  }
+.review__form__group-evaluation label{
+    position: relative;
+    padding: 10px 10px 0;
+    color: gray;
+    cursor: pointer;
+    font-size: 40px;
+  }
+.review__form__group-evaluation label .text{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+  }
+.review__form__group-evaluation label:hover,
+.review__form__group-evaluation label:hover ~ label,
+.review__form__group-evaluation input[type='radio']:checked ~ label{
+    color: #ffcc00;
+  }
+
+.review__form__group-textarea textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.review__form button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.review__form button:hover {
+    background-color: #0056b3;
+}

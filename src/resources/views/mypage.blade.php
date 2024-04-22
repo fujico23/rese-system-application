@@ -15,6 +15,7 @@
 <div class="mypage__container">
     <div class="reservation">
         <h3 class="reservation__confirm">予約状況</h3>
+        @if(count($userReservations) > 0)
         @foreach($userReservations as $key => $reservation)
         <div class="reservation__container">
             <div class="reservation__container__heading">
@@ -74,6 +75,9 @@
             </form>
         </div>
         @endforeach
+        @else
+        <p>予約がありません</p>
+        @endif
     </div>
 
     <div class="favorite-shop">
@@ -147,10 +151,7 @@
             editableElements[i].style.color = "black";
         }
 
-        // id="enableEdit{{ $reservation->id }}" のボタンを非アクティブにする
         document.getElementById("enableEdit" + reservationId).disabled = true;
-
-        // id="enableSubmit{{ $reservation->id }}" のボタンをアクティブにする
         document.getElementById("enableSubmit" + reservationId).disabled = false;
     }
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\ShopRequest;
@@ -15,26 +16,51 @@ class ShopController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user) {
-            $role_id = $user->role_id;
-        } else {
-            $role_id = null; // または、ログインしていない場合に適切と思われる別の値を設定
-        }
         $areas = Area::all();
         $genres = Genre::all();
-        $shops = Shop::with(['area', 'genre', 'images'])
-            ->where('is_active', true)
-            ->get();
 
-        $favoriteShopIds = Auth::user() ? Auth::user()
-            ->favorites->pluck('shop_id')
-            ->toArray() : [];
+        // ログイン状態に関わらず初期化を実施
+        $shops = collect();
+        $reservedShopIds = [];
+        $favoriteShopIds = [];
 
-        $shops->each(function ($shop) use ($favoriteShopIds) {
+        //ログインしている場合、2つの処理を行う
+        if ($user) {
+            // 予約している店舗のIDを取得後、予約が入っている店舗情報を取得
+            $reservedShopIds = Reservation::where('user_id', $user->id)
+                ->pluck('shop_id')
+                ->toArray();
+
+            $shopsReserved = Shop::with(['area', 'genre', 'images', 'reservations'])
+                ->whereIn('id', $reservedShopIds)
+                ->where('is_active', true)
+                ->get();
+
+            // 予約が入っていない店舗情報を取得
+            $shopsNotReserved = Shop::with(['area', 'genre', 'images'])
+                ->whereNotIn('id', $reservedShopIds)
+                ->where('is_active', true)
+                ->get();
+
+            // (1)予約が入っているお店と予約が入っていないお店を結合し、予約が入っているお店から表示させる
+            $shops = $shopsReserved->merge($shopsNotReserved);
+
+            // (2)お気に入りの店舗IDを取得
+            $favoriteShopIds = $user->favorites->pluck('shop_id')->toArray();
+        } else {
+            // ログインしていない場合はす全ての店舗情報を取得
+            $shops = Shop::with(['area', 'genre', 'images'])
+                ->where('is_active', true)
+                ->get();
+        }
+
+        // 各店舗に予約済みか、お気に入りに登録されているかのフラグを設定
+        $shops->each(function ($shop) use ($reservedShopIds, $favoriteShopIds) {
+            $shop->isReserved = in_array($shop->id, $reservedShopIds);
             $shop->isFavorited = in_array($shop->id, $favoriteShopIds);
         });
 
-        return view('index', compact('role_id', 'areas', 'genres', 'shops'));
+        return view('index', compact('areas', 'genres', 'shops'));
     }
 
     public function search(Request $request)
@@ -57,20 +83,39 @@ class ShopController extends Controller
         return view('index', compact('areas', 'genres', 'shops'));
     }
 
-
     public function show(Shop $shop)
     {
+        $user = Auth::user();
+        $reservations = [];
+        $nowDate = Carbon::now()->toDateString();
+        $twoHoursLater = Carbon::now()->addHours(2)->toTimeString(); //"23:47:01"
+
+        // ユーザーがログインしている場合の処理
+        if ($user) {
+            $reservations = Reservation::where('user_id', $user->id)
+                ->where('shop_id', $shop->id)
+                ->whereDate('reservation_date', '<', $nowDate)
+                ->where('status', '予約済み')
+                //->whereTime('reservation_time', '>', $twoHoursLater)
+                ->first();
+            //dd($reservations);
+        } else {
+            // ユーザーがログインしていない場合の処理
+            $reservations = [];
+        }
+
         $startTime = Carbon::createFromTime(17, 0, 0);
         $endTime = Carbon::createFromTime(21, 0, 0);
 
-        $reservationTimes = []; // 予約可能な時間を格納する配列を初期化
+        // 予約可能な時間を格納する配列を初期化
+        $reservationTimes = [];
 
         // 開始時間から15分ごとに繰り返し生成し、配列に追加
         for ($time = $startTime; $time->lessThanOrEqualTo($endTime); $time->addMinutes(15)) {
             $reservationTimes[] = $time->format('H:i'); // 時間を配列に追加
         }
 
-        return view('detail', compact('shop', 'reservationTimes')); // 予約可能な時間をビューに渡す
+        return view('detail', compact('shop', 'reservations', 'reservationTimes'));
     }
 
     public function create()

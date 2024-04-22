@@ -29,6 +29,15 @@
         <div class="hashtag">
             <span class="shop-area">#{{ $shop->area->area_name }}</span>
             <span class="shop-genre">#{{ $shop->genre->genre_name }}</span>
+            <!-- 予約情報がある場合にレビューを記述するリンクを表示 -->
+            <span>
+                <a href="{{ route('shop.review.index', $shop) }}" class="review-link">レビュー一覧</a>
+            </span>
+            @if(!empty($reservations))
+            <span>
+                <a href="{{ route('shop.review.create', $shop) }}" class="review-link">レビュー記入</a>
+            </span>
+            @endif
         </div>
         <div class="shop-description">
             <p>{{ $shop->description }}</p>
