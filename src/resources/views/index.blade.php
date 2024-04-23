@@ -24,7 +24,7 @@
         <span class="card__details__area hashtag">#{{ $shop->area->area_name }}</span>
         <span class="card__details__genre hashtag">#{{ $shop->genre->genre_name }}</span>
         @if($shop->isReserved)
-            <span><strong>予約済</strong></span>
+        <i class="fa-solid fa-square-pen fa-shake fa-xl" style="color: #FFD43B;"></i>
         @endif
     </div>
     <div class="card__footer">

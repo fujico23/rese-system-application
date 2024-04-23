@@ -74,7 +74,7 @@
 .review-section__container__group__inner .star5:before {
   content: '★★★★★'; /* すべての星を黄色で表示 */
   font-size: 1.2rem;
-  background: linear-gradient(to right, #cda85a, #cda85a);
+  background: linear-gradient(to right, #ffcc00, #ffcc00);
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;

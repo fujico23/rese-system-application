@@ -1,7 +1,6 @@
 @extends('layouts/app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth/register.css')}}">
 <link rel="stylesheet" href="{{ asset('css/detail.css')}}">
 @endsection
 
@@ -30,12 +29,12 @@
             <span class="shop-area">#{{ $shop->area->area_name }}</span>
             <span class="shop-genre">#{{ $shop->genre->genre_name }}</span>
             <!-- 予約情報がある場合にレビューを記述するリンクを表示 -->
-            <span>
+            <span class="reviews-index">
                 <a href="{{ route('shop.review.index', $shop) }}" class="review-link">レビュー一覧</a>
             </span>
             @if(!empty($reservations))
-            <span>
-                <a href="{{ route('shop.review.create', $shop) }}" class="review-link">レビュー記入</a>
+            <span class="reviews-create">
+                <a href="{{ route('shop.review.create', $shop) }}" class="review-link">レビューを書く</a>
             </span>
             @endif
         </div>

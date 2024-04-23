@@ -33,6 +33,7 @@ Route::middleware('role')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('index');
     Route::get('/search', [ShopController::class, 'search'])->name('search');
     Route::get('/detail/{shop}', [ShopController::class, 'show'])->name('shop.detail');
+    Route::get('detail/{shop}/review/index', [ReviewController::class, 'index'])->name('shop.review.index');
     //会員登録かつメール認証後にお気に入り機能・マイページ閲覧・予約機能可能
     Route::middleware('auth', 'verified')->group(function () {
         Route::post('/favorites/add', [FavoriteController::class, 'store'])->name('favorite.add');
@@ -49,13 +50,14 @@ Route::middleware('role')->group(function () {
         Route::get('/detail/{shop}/review', [ReviewController::class, 'create'])->name('shop.review.create');
         Route::post('/detail/{shop}/review/store', [ReviewController::class, 'store'])->name('shop.review.store');
         Route::get('detail/review/done', [ReviewController::class, 'done']);
-        Route::get('detail/{shop}/review/index', [ReviewController::class, 'index'])->name('shop.review.index');
+
         //role_id 1 もしくは　2のみ店舗管理ページに遷移出来る
         Route::middleware('shop.management')->group(function () {
             Route::get('/shop/management', [ManagementController::class, 'index'])->name('management');
             Route::patch('/management/edit/{shop}', [ManagementController::class, 'update'])->name('management.edit');
-            Route::get('/shop/reservation/confirm', [ManagementController::class, 'show']);
             Route::delete('/shop/management/image/delete', [ManagementController::class, 'destroy'])->name('images.delete');
+            Route::get('/shop/reservation/confirm', [ManagementController::class, 'show'])->name('reservation.confirm');
+            Route::post('/shop/reservation/{reservation}/update/status', [ManagementController::class, 'updateStatus'])->name('status.update');
         });
     });
 

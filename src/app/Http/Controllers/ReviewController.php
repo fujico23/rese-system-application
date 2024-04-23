@@ -17,14 +17,21 @@ class ReviewController extends Controller
 
     public function store(Shop $shop, Request $request)
     {
+        // 同店舗・同ユーザーで複数回予約が入っていた場合、statusが予約済みの最初のデータを取得
         $reservation = $shop->reservations()
             ->where('user_id', Auth::id())
+            ->where('status', '予約済み')
             ->first();
+
         if ($reservation) {
-            $reviewData = $request->only('reservation_id', 'comment', 'rating');
+            $reviewData = [
+                'reservation_id' => $reservation->id,
+                'comment' => $request->input('comment'),
+                'rating' => $request->input('rating'),
+            ];
             Review::create($reviewData);
 
-            $status = $request->only('status')['status'];
+            $status = $request->input('status'); // inputメソッドを使用してstatusを取得
             $reservation->update(['status' => $status]);
 
             return view('review_done', compact('shop'));
@@ -35,7 +42,7 @@ class ReviewController extends Controller
 
     public function index(Shop $shop)
     {
-        $reservations = $shop->reservations()->with('review','user')->get();
+        $reservations = $shop->reservations()->with('review', 'user')->get();
         return view('shop_review_index', compact('reservations'));
     }
 }

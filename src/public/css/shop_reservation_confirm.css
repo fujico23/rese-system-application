@@ -14,6 +14,12 @@
     margin-bottom: 20px;
 }
 
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
 .shop-reservation-confirm__container {
     width: 100%;
     overflow-x: auto; /* 表が幅を超えた場合にスクロールバーを表示 */
@@ -23,6 +29,7 @@
     width: 100%;
     border-collapse: collapse; /* ボーダーの重複を避ける */
     margin-bottom: 20px; /* 各店舗のテーブル間の余白 */
+    text-align: center;
 }
 
 .shop-reservation-confirm__container__table-row {
@@ -33,13 +40,26 @@
 .shop-reservation-confirm__container__table-row__header {
     background-color: #007bff;
     color: #fff;
-    padding: 10px;
-    text-align: left;
+    padding: 5px;
+    text-align: center;
 }
 
 .shop-reservation-confirm__container__table-row__detail {
-    padding: 10px;
+    padding: 7px;
     border-top: 1px solid #dee2e6;
+}
+.shop-reservation-confirm__container__table-row__detail__submit {
+    background-color: #ff5100;
+    border: none;
+    color: #fff;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
 }
 
 /* レスポンシブ対応 */
@@ -50,6 +70,6 @@
 
     .shop-reservation-confirm__container__table-row__header,
     .shop-reservation-confirm__container__table-row__detail {
-        padding: 8px;
+        padding: 5px;
     }
 }

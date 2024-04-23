@@ -5,19 +5,20 @@
 @endsection
 
 @section('content')
-<h2 class="review__heading">飲食店レビューフォーム</h2>
+<h2 class="review__heading">Review Form</h2>
 <form class="review__form" action="{{ route('shop.review.store', $shop) }}" method="post">
     @csrf
     <div class="review__form__group">
-        <p>{{ Auth::user()->name }}さん</p>
-        <p>
+        <p>{{ Auth::user()->name }} さん</p>
+        <p><span>
             @if($reservation = $shop->reservations->first())
             {{ $reservation->reservation_date }}
             @endif
+            </span>に
         </p>
-        <p>に{{ $shop->shop_name }}へご来場いただいた際の</p>
+        <p>「<span>{{ $shop->shop_name }}</span>」へご来店いただいた際の</p>
         <p>ご意見をお聞かせ下さい。</p>
-        <p>今後の参考にさせていただきます。</p>
+        <p>今後の参考にさせていただきます!</p>
     </div>
 
     <div class="review__form__group-evaluation">
@@ -33,7 +34,7 @@
         <label for="star5"><span class="text">1</span>★</label>
     </div>
     <div class="review__form__group-textarea">
-        <label class="review__form__group__label">コメント:</label>
+        <label class="review__form__group__label">コメント</label>
         <textarea name="comment" id="comment" rows="4" cols="50"></textarea>
     </div>
     @if($shop->reservations->isNotEmpty())

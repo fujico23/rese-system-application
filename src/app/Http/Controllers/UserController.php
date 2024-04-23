@@ -20,6 +20,7 @@ class UserController extends Controller
 
         $userReservations = Reservation::with('shop')
             ->where('user_id', $user->id)
+            ->where('status', '予約済み')
             ->get();
         $reservationCount = count($userReservations);
 

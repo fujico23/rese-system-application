@@ -15,7 +15,7 @@
             <div class="review-section__container__group__inner review-area">
                 <p class="name">{{ $reservation->user->name }}さん</p>
                 <p class="star{{ $reservation->review->rating }}"></p>
-                <p class="comment">{{ $reservation->review->first()->comment }}</p>
+                <p class="comment">{{ $reservation->review->comment }}</p>
                 <p class="date">{{ $reservation->review->created_at->format('Y年m月d日') }}</p>
             </div>
             <a href="#">商品を見る</a>

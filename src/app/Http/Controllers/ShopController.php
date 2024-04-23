@@ -23,11 +23,15 @@ class ShopController extends Controller
         $shops = collect();
         $reservedShopIds = [];
         $favoriteShopIds = [];
+        $today = now();
 
         //ログインしている場合、2つの処理を行う
         if ($user) {
             // 予約している店舗のIDを取得後、予約が入っている店舗情報を取得
+            //予約日時が過ぎた口コミ未送信のshopIdを取得
             $reservedShopIds = Reservation::where('user_id', $user->id)
+                ->where('status', '予約済み')
+                ->whereDate('reservation_date', '<', now())
                 ->pluck('shop_id')
                 ->toArray();
 
@@ -98,7 +102,6 @@ class ShopController extends Controller
                 ->where('status', '予約済み')
                 //->whereTime('reservation_time', '>', $twoHoursLater)
                 ->first();
-            //dd($reservations);
         } else {
             // ユーザーがログインしていない場合の処理
             $reservations = [];

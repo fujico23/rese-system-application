@@ -7,6 +7,7 @@ use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Image;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,17 +66,6 @@ class ManagementController extends Controller
         return redirect()->route('management')->with('success', '店舗が更新されました！');
     }
 
-    public function show()
-    {
-        $userId = Auth::id();
-        $shops = Shop::join('shop_users', 'shops.id', '=', 'shop_users.shop_id')
-            ->where('shop_users.user_id', $userId)
-            ->select('shops.*')
-            ->get();
-
-        return view('shop_reservation_confirm', compact('shops'));
-    }
-
     public function destroy(Request $request)
     {
         // チェックボックスから送信された画像IDの配列を取得
@@ -96,5 +86,24 @@ class ManagementController extends Controller
             return redirect()->route('management')->with('success', '選択された画像が削除されました！');
         }
         return back()->withErrors(['message' => '削除する画像が選択されていません。']);
+    }
+
+    public function show()
+    {
+        $userId = Auth::id();
+        $shops = Shop::join('shop_users', 'shops.id', '=', 'shop_users.shop_id')
+            ->where('shop_users.user_id', $userId)
+            ->select('shops.*')
+            ->get();
+
+        return view('shop_reservation_confirm', compact('shops'));
+    }
+
+    public function updateStatus(Request $request, Reservation $reservation)
+    {
+        $status = $request->input('status');
+        $reservation->update(['status' => $status]);
+
+        return redirect()->route('reservation.confirm', ['reservation' => $reservation->id])->with('success', 'ステータスが更新されました！');
     }
 }
